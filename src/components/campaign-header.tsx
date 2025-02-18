@@ -1,6 +1,5 @@
 import Image from "next/image"
-import { Instagram, Youtube, Calendar, DollarSign, Wallet, Rocket, Circle, Music } from "lucide-react"
-import { FaTiktok, FaInstagram, FaSnapchat, FaYoutube } from "react-icons/fa";
+import { Instagram, Youtube, Wallet, Circle, Music } from "lucide-react"
 
 interface CampaignHeaderProps {
   campaign: {
