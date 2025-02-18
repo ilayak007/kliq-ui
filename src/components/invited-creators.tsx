@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { CreatorCard } from "@/components/creator-card"
 import { Users } from "lucide-react"
+import { useState } from "react"
 
 interface InvitedCreatorsProps {
   creators: Array<{
@@ -20,6 +21,14 @@ interface InvitedCreatorsProps {
 }
 
 export function InvitedCreators({ creators }: InvitedCreatorsProps) {
+  const [invitedCreators, setInvitedCreators] = useState(creators)
+
+  const handleRemoveCreator = (creatorId: string) => {
+    setInvitedCreators((prevCreators) =>
+      prevCreators.filter((invited) => invited.creator.id !== creatorId)
+    )
+  }
+
   return (
     <section className="space-y-6">
       <div className="flex items-center justify-between">
@@ -36,7 +45,7 @@ export function InvitedCreators({ creators }: InvitedCreatorsProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-        {creators?.map((invited) => (
+        {invitedCreators?.map((invited) => (
           <CreatorCard
             key={invited.creator.id}
             creator={{
@@ -48,7 +57,9 @@ export function InvitedCreators({ creators }: InvitedCreatorsProps) {
               followers: invited.creator.followers,
               platforms: invited.creator.platforms,
               imageUrl: invited.creator.imageUrl || "/placeholder.svg",
+              campaignId: invited.campaignId, // Pass campaignId
             }}
+            onRemove={handleRemoveCreator} // Pass onRemove function
           />
         ))}
       </div>

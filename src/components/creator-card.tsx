@@ -1,6 +1,8 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Instagram, Youtube } from "lucide-react"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 interface CreatorCardProps {
   creator: {
@@ -12,10 +14,28 @@ interface CreatorCardProps {
     platforms: string[]
     imageKey: string | null
     imageUrl: string | null
+    campaignId: string
   }
+  onRemove: (creatorId: string) => void // Add onRemove prop
 }
 
-export function CreatorCard({ creator }: CreatorCardProps) {
+export function CreatorCard({ creator, onRemove }: CreatorCardProps) {
+  const handleCancelInvite = async () => {
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+        console.log("API URL:", apiUrl);   
+      await axios.delete(`${apiUrl}/invited-creators`, {
+        data: { campaignId: creator.campaignId, creatorId: creator.id },
+      })
+
+      toast.success("Invite canceled")
+      onRemove(creator.id) // Update state in the parent component
+    } catch (error) {
+      console.error("Error removing creator:", error)
+      toast.error("Failed to cancel invite")
+    }
+  }
+
   return (
     <div className="bg-zinc-900 rounded-xl p-4 space-y-4">
       <div className="relative">
@@ -40,12 +60,15 @@ export function CreatorCard({ creator }: CreatorCardProps) {
           <div key={platform} className="w-8 h-8 flex items-center justify-center rounded bg-gray-700">
             {platform.toLowerCase() === "instagram" && <Instagram className="w-5 h-5 text-gray-400" />}
             {platform.toLowerCase() === "youtube" && <Youtube className="w-5 h-5 text-gray-400" />}
-            {/* Add more icons for platforms if needed */}
           </div>
         ))}
       </div>
 
-      <Button variant="secondary" className="w-full bg-zinc-800 hover:bg-zinc-700 text-sm">
+      <Button
+        variant="secondary"
+        className="w-full bg-zinc-800 hover:bg-zinc-700 text-sm"
+        onClick={handleCancelInvite}
+      >
         Cancel Invite
       </Button>
     </div>
