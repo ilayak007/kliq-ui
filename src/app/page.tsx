@@ -1,101 +1,195 @@
-import Image from "next/image";
+"use client"
+
+import { useEffect, useState, useRef } from "react"
+import Link from "next/link"
+import axios from "axios"
+import { Loader2, ChevronDown } from "lucide-react"
+import Image from "next/image"
+
+interface Campaign {
+  id: string
+  name: string
+  description: string
+  imageUrl: string
+  isActive: boolean
+  assignedBy: string
+  assignedImageUrl: string
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [campaigns, setCampaigns] = useState<Campaign[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [showActive, setShowActive] = useState(true)
+  const [selectedAssignedBy, setSelectedAssignedBy] = useState<string | null>(null)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const response = await axios.get("https://kliq-service.vercel.app/campaigns")
+        setCampaigns(response.data)
+      } catch (err) {
+        setError("Failed to load campaigns")
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCampaigns()
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+        <Loader2 className="animate-spin h-10 w-10 text-gray-400" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-10">{error}</div>
+  }
+
+  const filteredCampaigns = selectedAssignedBy
+    ? campaigns.filter((c) => c.assignedBy === selectedAssignedBy)
+    : showActive
+    ? campaigns.filter((c) => c.isActive)
+    : campaigns.filter((c) => !c.isActive)
+
+  const assignedUsers = Array.from(new Set(campaigns.map((c) => c.assignedBy))).sort()
+
+  return (
+    <div className="min-h-screen bg-black text-white p-8">
+      <h1 className="text-4xl font-bold mb-6">Kliq Campaign Dashboard</h1>
+
+      {/* Top Bar: Toggle + AssignedBy Dropdown */}
+      <div className="flex justify-between items-center mb-6">
+        {/* Toggle Switch */}
+        <div className="flex bg-gray-800 p-1 rounded-full">
+          <button
+            onClick={() => setShowActive(true)}
+            disabled={selectedAssignedBy !== null}
+            className={`px-4 py-2 text-sm font-semibold rounded-full transition-all ${
+              showActive ? "bg-emerald-500 text-black" : "text-gray-400"
+            } ${selectedAssignedBy ? "opacity-50 cursor-not-allowed" : ""}`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Active
+          </button>
+          <button
+            onClick={() => setShowActive(false)}
+            disabled={selectedAssignedBy !== null}
+            className={`px-4 py-2 text-sm font-semibold rounded-full transition-all ${
+              !showActive ? "bg-yellow-500 text-black" : "text-gray-400"
+            } ${selectedAssignedBy ? "opacity-50 cursor-not-allowed" : ""}`}
           >
-            Read our docs
-          </a>
+            Draft
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Assigned By Dropdown */}
+        <div className="relative z-50" ref={dropdownRef}>
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="flex items-center px-4 py-2 bg-gray-800 rounded-full text-white hover:bg-gray-700"
+          >
+            <span>{selectedAssignedBy || "Created By"}</span>
+            <ChevronDown className="ml-2 h-4 w-4" />
+          </button>
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-gray-700 shadow-lg rounded-lg overflow-hidden z-50 border border-gray-600">
+              <ul className="max-h-60 overflow-auto">
+                <li
+                  onClick={() => {
+                    setSelectedAssignedBy(null)
+                    setDropdownOpen(false)
+                  }}
+                  className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600 flex justify-between items-center"
+                >
+                  <span>All</span>
+                </li>
+                {assignedUsers.map((user) => {
+                  const campaign = campaigns.find((c) => c.assignedBy === user)
+                  return (
+                    <li
+                      key={user}
+                      onClick={() => {
+                        setSelectedAssignedBy(user)
+                        setDropdownOpen(false)
+                      }}
+                      className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600 flex justify-between items-center"
+                    >
+                      <span>{user}</span>
+                      {campaign?.assignedImageUrl && (
+                        <Image
+                          src={campaign.assignedImageUrl}
+                          alt={user}
+                          width={24}
+                          height={24}
+                          className="rounded-full"
+                        />
+                      )}
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {filteredCampaigns.length === 0 ? (
+        <p className="text-gray-400 text-center">No campaigns found.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCampaigns.map((campaign) => (
+            <Link key={campaign.id} href={`/campaigns/${campaign.id}`} className="group block">
+              <div className="bg-gray-900 p-4 rounded-lg transition-all group-hover:scale-105 relative">
+                <Image
+                  src={campaign.imageUrl || "/placeholder.svg"}
+                  alt={campaign.name}
+                  width={300}
+                  height={200}
+                  className="w-full h-40 object-cover rounded-md"
+                />
+                <h3 className="mt-3 text-lg font-semibold">{campaign.name}</h3>
+                <p className="text-sm text-gray-400">{campaign.description}</p>
+                <span
+                  className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${
+                    campaign.isActive ? "bg-emerald-900/50 text-emerald-400" : "bg-yellow-900/50 text-yellow-400"
+                  }`}
+                >
+                  {campaign.isActive ? "Activated" : "Drafted"}
+                </span>
+                {/* Assigned Image at Bottom Right */}
+                {campaign.assignedImageUrl && (
+                  <Image
+                    src={campaign.assignedImageUrl}
+                    alt={campaign.assignedBy}
+                    width={32}
+                    height={32}
+                    className="rounded-full absolute bottom-4 right-4 border-2 border-gray-700"
+                  />
+                )}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
-  );
+  )
 }
