@@ -76,8 +76,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
-      <h1 className="text-4xl font-bold mb-6">Kliq Campaign Dashboard</h1>
 
+    <div className="flex justify-between items-center mb-6">
+      {/* Title */}
+      <h1 className="text-4xl font-bold">Kliq Campaign Dashboard</h1>
+
+      {/* Logo */}
+      <Link href="/">
+      <Image
+        src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
+        alt="Kliq Logo"
+        width={100}
+        height={25}
+      />
+      </Link>
+    </div>
       {/* Top Bar: Toggle + AssignedBy Dropdown */}
       <div className="flex justify-between items-center mb-6">
         {/* Toggle Switch */}
