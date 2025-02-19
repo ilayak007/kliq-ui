@@ -1,3 +1,4 @@
+import { useState } from "react"
 import Image from "next/image"
 import { Instagram, Youtube, Wallet, Circle, Music } from "lucide-react"
 
@@ -18,6 +19,7 @@ interface CampaignHeaderProps {
 }
 
 export function CampaignHeader({ campaign }: CampaignHeaderProps) {
+  const [imageError, setImageError] = useState(false)
   return (
     <div className="grid md:grid-cols-2 gap-8">
       <div className="space-y-6">
@@ -42,11 +44,12 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
 
         <div className="flex items-center gap-3">
           <Image
-            src={campaign.assignedImageUrl || "/placeholder.svg"}
+            src={imageError ? "/placeholder.jpg" : campaign.assignedImageUrl || "/placeholder.jpg"}
             alt="Assigned By"
             width={40}
             height={40}
             className="rounded-lg"
+            onError={() => setImageError(true)}
           />
           <div>
             <p className="font-medium">{campaign.assignedBy}</p>
@@ -95,7 +98,7 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
       <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-white">
         <Image
           src={campaign.imageUrl || "/placeholder.svg"}
-          alt={campaign.name}
+          alt="{campaign.name}"
           fill
           className="object-contain p-8"
         />
