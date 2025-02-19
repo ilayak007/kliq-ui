@@ -23,6 +23,7 @@ export default function Home() {
   const [showActive, setShowActive] = useState(true)
   const [selectedAssignedBy, setSelectedAssignedBy] = useState<string | null>(null)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [imageError, setImageError] = useState(false) 
 
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -123,7 +124,7 @@ export default function Home() {
                   <span>All</span>
                 </li>
                 {assignedUsers.map((user) => {
-                  const campaign = campaigns.find((c) => c.assignedBy === user)
+                  // const campaign = campaigns.find((c) => c.assignedBy === user)
                   return (
                     <li
                       key={user}
@@ -134,7 +135,8 @@ export default function Home() {
                       className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600 flex justify-between items-center"
                     >
                       <span>{user}</span>
-                      {campaign?.assignedImageUrl && (
+                      {/* <div>console.log({campaign?.id})</div> */}
+                      {/* {campaign?.assignedImageUrl && (
                         <Image
                           src={campaign.assignedImageUrl}
                           alt={user}
@@ -142,7 +144,7 @@ export default function Home() {
                           height={24}
                           className="rounded-full"
                         />
-                      )}
+                      )} */}
                     </li>
                   )
                 })}
@@ -173,16 +175,17 @@ export default function Home() {
                     campaign.isActive ? "bg-emerald-900/50 text-emerald-400" : "bg-yellow-900/50 text-yellow-400"
                   }`}
                 >
-                  {campaign.isActive ? "Activated" : "Drafted"}
+                  {campaign.assignedBy}
                 </span>
                 {/* Assigned Image at Bottom Right */}
                 {campaign.assignedImageUrl && (
                   <Image
-                    src={campaign.assignedImageUrl}
+                    src={imageError ? "/placeholder.jpg" : campaign.assignedImageUrl || "/placeholder.jpg"}
                     alt={campaign.assignedBy}
                     width={32}
                     height={32}
                     className="rounded-full absolute bottom-4 right-4 border-2 border-gray-700"
+                    onError={() => setImageError(true)} 
                   />
                 )}
               </div>
