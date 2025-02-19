@@ -92,8 +92,7 @@ export default function CampaignPage() {
         <main className="space-y-12">
           <CampaignHeader campaign={campaignData.campaign} />          
           <InvitedCreators creators={campaignData?.campaign?.invitedCreators ?? []} />
-          <MatchingCreators />
-        </main>
+          <MatchingCreators campaignId={campaignData?.campaign?.id} />        </main>
       </div>
     </div>
   )

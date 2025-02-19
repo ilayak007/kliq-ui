@@ -16,23 +16,34 @@ interface CreatorCardProps {
     imageUrl: string | null
     campaignId: string
   }
-  onRemove: (creatorId: string) => void // Add onRemove prop
+  isInvited: boolean // 🔹 New prop to determine button label
+  onRemove: (creatorId: string) => void
 }
 
-export function CreatorCard({ creator, onRemove }: CreatorCardProps) {
-  const handleCancelInvite = async () => {
+export function CreatorCard({ creator, isInvited, onRemove }: CreatorCardProps) {
+  const handleAction = async () => {
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
-        console.log("API URL:", apiUrl);   
-      await axios.delete(`${apiUrl}/invited-creators`, {
-        data: { campaignId: creator.campaignId, creatorId: creator.id },
-      })
+      const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
 
-      toast.success("Invite canceled")
-      onRemove(creator.id) // Update state in the parent component
+      if (isInvited) {
+        // 🔹 Cancel Invite API Call
+        await axios.delete(`${apiUrl}/invited-creators`, {
+          data: { campaignId: creator.campaignId, creatorId: creator.id },
+        })
+        toast.success("Invite canceled")
+      } else {
+        // 🔹 Send Invite API Call
+        await axios.post(`${apiUrl}/invited-creators`, {
+          campaignId: creator.campaignId,
+          creatorId: creator.id,
+        })
+        toast.success("Invite sent")
+      }
+
+      onRemove(creator.id) // Remove from Matching Creators on invite
     } catch (error) {
-      console.error("Error removing creator:", error)
-      toast.error("Failed to cancel invite")
+      console.error("Error processing action:", error)
+      toast.error("Failed to process action")
     }
   }
 
@@ -46,7 +57,7 @@ export function CreatorCard({ creator, onRemove }: CreatorCardProps) {
           height={200}
           className="w-full aspect-square object-cover rounded-lg"
         />
-        <span className="absolute top-2 right-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">Invite Sent</span>
+        {isInvited && <span className="absolute top-2 right-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">Invite Sent</span>}
       </div>
 
       <div className="space-y-2">
@@ -64,12 +75,13 @@ export function CreatorCard({ creator, onRemove }: CreatorCardProps) {
         ))}
       </div>
 
+      {/* 🔹 Button changes dynamically */}
       <Button
         variant="secondary"
         className="w-full bg-zinc-800 hover:bg-zinc-700 text-sm"
-        onClick={handleCancelInvite}
+        onClick={handleAction}
       >
-        Cancel Invite
+        {isInvited ? "Cancel Invite" : "Send Invite"}
       </Button>
     </div>
   )

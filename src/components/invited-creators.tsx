@@ -30,7 +30,7 @@ export function InvitedCreators({ creators }: InvitedCreatorsProps) {
   }
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-6 bg-zinc-900 p-6 rounded-lg"> {/* ✅ Background color applied */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 rounded-full bg-emerald-900/50 flex items-center justify-center">
@@ -59,6 +59,7 @@ export function InvitedCreators({ creators }: InvitedCreatorsProps) {
               imageUrl: invited.creator.imageUrl || "/placeholder.svg",
               campaignId: invited.campaignId, // Pass campaignId
             }}
+            isInvited={true} // ✅ Fix: Ensure invited creators always show "Cancel Invite"
             onRemove={handleRemoveCreator} // Pass onRemove function
           />
         ))}
