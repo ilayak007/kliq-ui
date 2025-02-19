@@ -1,3 +1,4 @@
+import { useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Instagram, Youtube } from "lucide-react"
@@ -21,6 +22,8 @@ interface CreatorCardProps {
 }
 
 export function CreatorCard({ creator, isInvited, onRemove }: CreatorCardProps) {
+  const [imageError, setImageError] = useState(false) // ✅ Track image load failure
+
   const handleAction = async () => {
     try {
       const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
@@ -51,11 +54,12 @@ export function CreatorCard({ creator, isInvited, onRemove }: CreatorCardProps) 
     <div className="bg-zinc-900 rounded-xl p-4 space-y-4">
       <div className="relative">
         <Image
-          src={creator.imageUrl || "/placeholder.svg"}
+          src={imageError ? "/placeholder.jpg" : creator.imageUrl || "/placeholder.jpg"} // ✅ Prevent reloading missing image
           alt={creator.name}
           width={200}
           height={200}
           className="w-full aspect-square object-cover rounded-lg"
+          onError={() => setImageError(true)} // ✅ Set imageError when image fails
         />
         {isInvited && <span className="absolute top-2 right-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">Invite Sent</span>}
       </div>
