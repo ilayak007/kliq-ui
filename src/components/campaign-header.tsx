@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Image from "next/image"
-import { Instagram, Youtube, Wallet, Circle, Music } from "lucide-react"
+import {Wallet} from "lucide-react"
+import { TikTokIcon, InstagramIcon, SnapchatIcon, YouTubeIcon } from "@/components/icons";
 
 interface CampaignHeaderProps {
   campaign: {
@@ -84,10 +85,10 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
           <div className="flex gap-3">
             {campaign.assignedChannels.map((channel) => (
               <div key={channel} className="w-8 h-8 flex items-center justify-center rounded bg-gray-700">
-                {channel === "Instagram" && <Instagram className="w-5 h-5" />}
-                {channel === "YouTube" && <Youtube className="w-5 h-5" />}
-                {channel === "Snapchat" && <Circle className="h-6 w-6 " />}
-                {channel === "TikTok" && <Music className="h-6 w-6 " />}
+                {channel === "Instagram" && <InstagramIcon />}
+                {channel === "YouTube" && <YouTubeIcon />}
+                {channel === "Snapchat" && <SnapchatIcon />}
+                {channel === "TikTok" && <TikTokIcon />}
                 {/* Add other channel icons as needed */}
               </div>
             ))}
