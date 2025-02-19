@@ -8,8 +8,19 @@ interface MatchingCreatorsProps {
   campaignId: string
 }
 
+interface Creator {
+  id: string
+  name: string
+  city: string
+  country: string
+  followers: string
+  platforms: string[]
+  imageUrl: string | null
+  imageKey: string | null
+}
+
 export function MatchingCreators({ campaignId }: MatchingCreatorsProps) {
-  const [creators, setCreators] = useState<Array<any>>([]) // Store fetched creators
+  const [creators, setCreators] = useState<Creator[]>([])// Store fetched creators
   const [loading, setLoading] = useState(false) // Track loading state
 
   const fetchCreators = async () => {
