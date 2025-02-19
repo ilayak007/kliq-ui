@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { CreatorCard } from "@/components/creator-card"
+import { Dialog, DialogClose, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Users } from "lucide-react"
 import axios from "axios"
 
 interface MatchingCreatorsProps {
   campaignId: string
+  isActive: boolean
 }
 
 interface Creator {
@@ -19,21 +21,27 @@ interface Creator {
   imageKey: string | null
 }
 
-export function MatchingCreators({ campaignId }: MatchingCreatorsProps) {
-  const [creators, setCreators] = useState<Creator[]>([]) // Store fetched creators
-  const [loading, setLoading] = useState(false) // Track loading state
-  const [hasSearched, setHasSearched] = useState(false) // ✅ Track if the search API was called
+export function MatchingCreators({ campaignId, isActive }: MatchingCreatorsProps) {
+  const [creators, setCreators] = useState<Creator[]>([]) 
+  const [loading, setLoading] = useState(false) 
+  const [hasSearched, setHasSearched] = useState(false) 
+  const [isDialogOpen, setIsDialogOpen] = useState(false) 
 
   const fetchCreators = async () => {
+    if (!isActive) {
+      setIsDialogOpen(true) 
+      return
+    }
+
     try {
       setLoading(true)
-      setHasSearched(true) // ✅ Mark search as performed
+      setHasSearched(true) 
       const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
       const response = await axios.get(`${apiUrl}/creators/top`, {
         params: { excludeCampaignId: campaignId }, 
       });
   
-      setCreators(response.data) // Update state with fetched creators
+      setCreators(response.data) 
     } catch (error) {
       console.error("Error fetching creators:", error)
     } finally {
@@ -59,7 +67,7 @@ export function MatchingCreators({ campaignId }: MatchingCreatorsProps) {
         <Button
           className="bg-indigo-600 hover:bg-indigo-700 text-white"
           onClick={fetchCreators}
-          disabled={loading} // Disable while loading
+          disabled={loading} 
         >
           {loading ? "Fetching Top 3..." : "Search & Invite"}
         </Button>
@@ -80,16 +88,29 @@ export function MatchingCreators({ campaignId }: MatchingCreatorsProps) {
                 followers: creator.followers,
                 platforms: creator.platforms,
                 imageUrl: creator.imageUrl || "/placeholder.svg",
-                campaignId: campaignId, // Pass campaignId
+                campaignId: campaignId, 
               }}
-              isInvited={false} // 🔹 Mark as NOT invited so button says "Send Invite"
+              isInvited={false} 
               onRemove={() => setCreators(creators.filter((c) => c.id !== creator.id))}
             />
           ))}
         </div>
       ) : (
-        hasSearched && <p className="text-gray-400">No creators found.</p> // ✅ Show message only if search was performed
+        hasSearched && <p className="text-gray-400">No creators found.</p> 
       )}
+
+      {/* Warning Dialog for DRAFT Campaign */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <DialogContent>
+        <DialogTitle className="text-white text-lg mb-2">Campaign in Draft</DialogTitle>
+          <DialogDescription className="text-gray-300 mb-4">
+            You cannot invite creators while the campaign is in DRAFT status.
+          </DialogDescription>
+          <DialogClose className="w-full bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-md mt-2">
+            Close
+          </DialogClose>
+      </DialogContent>
+      </Dialog>
     </section>
   )
 }

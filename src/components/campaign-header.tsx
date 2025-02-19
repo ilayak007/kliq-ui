@@ -35,7 +35,7 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
   </span>
 ) : (
   <span className="inline-block px-2 py-1 text-xs font-semibold bg-yellow-900/50 text-yellow-400 rounded-full">
-    Drafted
+    Draft
   </span>
 )}
 
