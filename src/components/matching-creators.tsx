@@ -29,7 +29,10 @@ export function MatchingCreators({ campaignId }: MatchingCreatorsProps) {
       setLoading(true)
       setHasSearched(true) // ✅ Mark search as performed
       const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
-      const response = await axios.get(`${apiUrl}/creators/top`)
+      const response = await axios.get(`${apiUrl}/creators/top`, {
+        params: { excludeCampaignId: campaignId }, 
+      });
+  
       setCreators(response.data) // Update state with fetched creators
     } catch (error) {
       console.error("Error fetching creators:", error)
