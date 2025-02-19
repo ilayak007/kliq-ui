@@ -14,6 +14,7 @@ interface Campaign {
   isActive: boolean
   assignedBy: string
   assignedImageUrl: string
+  launchDate: string
 }
 
 export default function Home() {
@@ -23,7 +24,6 @@ export default function Home() {
   const [showActive, setShowActive] = useState(true)
   const [selectedAssignedBy, setSelectedAssignedBy] = useState<string | null>(null)
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [imageError, setImageError] = useState(false) 
 
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -170,6 +170,7 @@ export default function Home() {
                 />
                 <h3 className="mt-3 text-lg font-semibold">{campaign.name}</h3>
                 <p className="text-sm text-gray-400">{campaign.description}</p>
+                <div className="flex justify-between items-center mt-2">
                 <span
                   className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${
                     campaign.isActive ? "bg-emerald-900/50 text-emerald-400" : "bg-yellow-900/50 text-yellow-400"
@@ -177,17 +178,21 @@ export default function Home() {
                 >
                   {campaign.assignedBy}
                 </span>
+                <span className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${
+                    campaign.isActive ? "bg-white/600 text-black-00" : "bg-white/600 text-black-00"
+                  }`}>{campaign.launchDate}</span>
+                  </div>
                 {/* Assigned Image at Bottom Right */}
-                {campaign.assignedImageUrl && (
+                {/* {campaign.assignedImageUrl && (
                   <Image
-                    src={imageError ? "/placeholder.jpg" : campaign.assignedImageUrl || "/placeholder.jpg"}
+                    src={imageError ?  campaign.assignedImageUrl : campaign.assignedImageUrl || "/placeholder.jpg"}
                     alt={campaign.assignedBy}
                     width={32}
                     height={32}
                     className="rounded-full absolute bottom-4 right-4 border-2 border-gray-700"
                     onError={() => setImageError(true)} 
                   />
-                )}
+                )} */}
               </div>
             </Link>
           ))}
