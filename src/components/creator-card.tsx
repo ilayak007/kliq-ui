@@ -33,14 +33,14 @@ export function CreatorCard({ creator, isInvited, onRemove }: CreatorCardProps) 
         await axios.delete(`${apiUrl}/invited-creators`, {
           data: { campaignId: creator.campaignId, creatorId: creator.id },
         })
-        toast.success("Invite canceled")
+        toast.success("Invite canceled", { autoClose: 2000 })
       } else {
         // 🔹 Send Invite API Call
         await axios.post(`${apiUrl}/invited-creators`, {
           campaignId: creator.campaignId,
           creatorId: creator.id,
         })
-        toast.success("Invite sent")
+        toast.success("Invite sent", { autoClose: 2000 })
       }
 
       onRemove(creator.id) // Remove from Matching Creators on invite

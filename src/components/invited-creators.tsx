@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import { CreatorCard } from "@/components/creator-card"
 import { Users } from "lucide-react"
 import { useState } from "react"
@@ -41,7 +41,7 @@ export function InvitedCreators({ creators }: InvitedCreatorsProps) {
             <p className="text-sm text-gray-400">Invite creators to activate your campaign</p>
           </div>
         </div>
-        <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">Invite Creators</Button>
+        {/* <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">Invite Creators</Button> */}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
