@@ -69,7 +69,7 @@ export function MatchingCreators({ campaignId, isActive }: MatchingCreatorsProps
           onClick={fetchCreators}
           disabled={loading} 
         >
-          {loading ? "Fetching Top 3..." : "Search & Invite"}
+          {loading ? "Fetching Top 4 ..." : "Search & Invite"}
         </Button>
       </div>
 
