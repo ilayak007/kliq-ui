@@ -20,12 +20,14 @@ interface Creator {
 }
 
 export function MatchingCreators({ campaignId }: MatchingCreatorsProps) {
-  const [creators, setCreators] = useState<Creator[]>([])// Store fetched creators
+  const [creators, setCreators] = useState<Creator[]>([]) // Store fetched creators
   const [loading, setLoading] = useState(false) // Track loading state
+  const [hasSearched, setHasSearched] = useState(false) // ✅ Track if the search API was called
 
   const fetchCreators = async () => {
     try {
       setLoading(true)
+      setHasSearched(true) // ✅ Mark search as performed
       const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
       const response = await axios.get(`${apiUrl}/creators/top`)
       setCreators(response.data) // Update state with fetched creators
@@ -83,7 +85,7 @@ export function MatchingCreators({ campaignId }: MatchingCreatorsProps) {
           ))}
         </div>
       ) : (
-        <p className="text-gray-400">No creators found.</p>
+        hasSearched && <p className="text-gray-400">No creators found.</p> // ✅ Show message only if search was performed
       )}
     </section>
   )
