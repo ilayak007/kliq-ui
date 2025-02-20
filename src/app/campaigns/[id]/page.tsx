@@ -93,7 +93,7 @@ export default function CampaignPage() {
           <CampaignHeader campaign={campaignData.campaign} />          
           <InvitedCreators creators={campaignData?.campaign?.invitedCreators ?? []} />
           <MatchingCreators 
-            campaignId={campaignData?.campaign?.id} 
+             campaignId={campaignData?.campaign?.id} 
             isActive={campaignData?.campaign?.isActive} 
           />
 
