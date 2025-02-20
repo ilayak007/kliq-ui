@@ -44,7 +44,6 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
         launchDate: today.toISOString(),
       })
 
-      // Format date as "February 27, 2025"
       const formattedDate = today.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
@@ -55,13 +54,10 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
       setUpdatedLaunchDate(formattedDate)
       setIsActive(true)
 
-      // Show toast notification
       toast.success("🎉 Campaign launched successfully!")
 
-      // Show confetti
       setShowConfetti(true)
 
-      // Stop confetti after 3 seconds
       setTimeout(() => setShowConfetti(false), 3000)
     } catch (error) {
       console.error("Error launching campaign:", error)

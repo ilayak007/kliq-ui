@@ -57,10 +57,10 @@ export function InvitedCreators({ creators }: InvitedCreatorsProps) {
               followers: invited.creator.followers,
               platforms: invited.creator.platforms,
               imageUrl: invited.creator.imageUrl || "/placeholder.svg",
-              campaignId: invited.campaignId, // Pass campaignId
+              campaignId: invited.campaignId,
             }}
-            isInvited={true} // ✅ Fix: Ensure invited creators always show "Cancel Invite"
-            onRemove={handleRemoveCreator} // Pass onRemove function
+            isInvited={true}
+            onRemove={handleRemoveCreator}
           />
         ))}
       </div>

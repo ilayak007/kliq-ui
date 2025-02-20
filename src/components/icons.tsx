@@ -1,4 +1,3 @@
-    // icons.tsx - Custom SVG Icons for Assigned Channels (Now with Black Background)
 
     import React from "react";
 
