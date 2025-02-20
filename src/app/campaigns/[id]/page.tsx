@@ -48,8 +48,8 @@ interface CampaignData {
 }
 
 export default function CampaignPage() {
-  const params = useParams() // ✅ Use `useParams` to get dynamic route params safely
-  const campaignId = params?.id as string | undefined // ✅ Ensure it's a string
+  const params = useParams()
+  const campaignId = params?.id as string | undefined
   const [campaignData, setCampaignData] = useState<CampaignData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -57,12 +57,12 @@ export default function CampaignPage() {
   useEffect(() => {
     const fetchCampaignData = async () => {
       console.log('here')  
-      if (!campaignId) return // ✅ Prevents API call if campaignId is undefined
+      if (!campaignId) return
 
       try {
         setIsLoading(true)
-        const response = await axios.get(`https://kliq-service.vercel.app/campaigns/${campaignId}`)
-        console.log("✅ API Response:", response.data)
+        const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
+        const response = await axios.get(`${apiUrl}/campaigns/${campaignId}`)
         setCampaignData(response.data)
       } catch (err) {
         setError("Failed to fetch campaign data")
@@ -73,7 +73,7 @@ export default function CampaignPage() {
     }
 
     fetchCampaignData()
-  }, [campaignId]) // ✅ Depend on `campaignId`, not `params.id`
+  }, [campaignId])
 
   if (isLoading) return <div className="text-white">Loading...</div>
   if (error) return <div className="text-red-500">{error}</div>
@@ -96,7 +96,6 @@ export default function CampaignPage() {
              campaignId={campaignData?.campaign?.id} 
             isActive={campaignData?.campaign?.isActive} 
           />
-
         </main>
       </div>
     </div>

@@ -30,7 +30,8 @@ export default function Home() {
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
-        const response = await axios.get("https://kliq-service.vercel.app/campaigns")
+        const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
+        const response = await axios.get(`${apiUrl}/campaigns`)
         setCampaigns(response.data)
       } catch (err) {
         setError("Failed to load campaigns")
