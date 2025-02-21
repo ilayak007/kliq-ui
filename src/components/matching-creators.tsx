@@ -24,7 +24,7 @@ interface MatchingCreatorsProps {
 }
 
 export function MatchingCreators({ campaignId, isActive, matchingCreators, setMatchingCreators }: MatchingCreatorsProps) {
-  const [creators, setCreators] = useState<Creator[]>([]);
+  //const [creators, setCreators] = useState<Creator[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -90,7 +90,7 @@ export function MatchingCreators({ campaignId, isActive, matchingCreators, setMa
     // Update arrow visibility on mount and when creators change
     useEffect(() => {
       updateArrowVisibility();
-    }, [creators]);
+    }, [matchingCreators]);
 
   return (
        <section className="space-y-6 bg-zinc-900 p-6 rounded-lg" ref={sectionRef}>

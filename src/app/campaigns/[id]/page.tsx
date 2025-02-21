@@ -20,10 +20,38 @@ interface Creator {
   imageUrl: string | null;
 }
 
+interface Campaign {
+  id: string
+  name: string
+  description: string
+  budget: number
+  launchDate: string
+  assignedBy: string
+  assignedChannels: string[]
+  imageUrl: string
+  assignedImageUrl: string | null
+  campaignCreatedDate: string
+  isActive: boolean
+  invitedCreators: InvitedCreator[]
+}
+
+interface InvitedCreator {
+  id: string
+  campaignId: string
+  creatorId: string
+  creator: Creator
+}
+
+interface CampaignData {
+  campaign: Campaign
+  invitedCreators: InvitedCreator[]
+}
+
+
 export default function CampaignPage() {
   const params = useParams();
   const campaignId = params?.id as string | undefined;
-  const [campaignData, setCampaignData] = useState<any>(null);
+  const [campaignData, setCampaignData] = useState<CampaignData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [matchingCreators, setMatchingCreators] = useState<Creator[]>([]); // ✅ Ensure correct typing
