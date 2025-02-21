@@ -1,54 +1,52 @@
-import { useState } from "react"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 import { TikTokIcon, InstagramIcon, SnapchatIcon, YouTubeIcon } from "@/components/icons";
-import axios from "axios"
-import { toast } from "react-toastify"
+import axios from "axios";
+import { toast } from "react-toastify";
 
 interface CreatorCardProps {
   creator: {
-    id: string
-    name: string
-    city: string
-    country: string
-    followers: string
-    platforms: string[]
-    imageKey: string | null
-    imageUrl: string | null
-    campaignId: string
-  }
-  isInvited: boolean // 🔹 New prop to determine button label
-  onRemove: (creatorId: string) => void
+    id: string;
+    name: string;
+    city: string;
+    country: string;
+    followers: string;
+    platforms: string[];
+    imageKey: string | null;
+    imageUrl: string | null;
+    campaignId: string; // ✅ Ensure this is included
+  };
+  isInvited: boolean;
+  onRemove: (creatorId: string) => void;
 }
 
 export function CreatorCard({ creator, isInvited, onRemove }: CreatorCardProps) {
-  const [imageError, setImageError] = useState(false)
+  const [imageError, setImageError] = useState(false);
 
   const handleAction = async () => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
+      const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
 
       if (isInvited) {
-        // 🔹 Cancel Invite API Call
         await axios.delete(`${apiUrl}/invited-creators`, {
           data: { campaignId: creator.campaignId, creatorId: creator.id },
-        })
-        toast.success("Invite canceled", { autoClose: 2000 })
+        });
+        toast.success("Invite canceled", { autoClose: 2000 });
       } else {
-        // 🔹 Send Invite API Call
         await axios.post(`${apiUrl}/invited-creators`, {
           campaignId: creator.campaignId,
           creatorId: creator.id,
-        })
-        toast.success("Invite sent", { autoClose: 2000 })
+        });
+        toast.success("Invite sent", { autoClose: 2000 });
       }
 
-      onRemove(creator.id) // Remove from Matching Creators on invite
+      onRemove(creator.id);
     } catch (error) {
-      console.error("Error processing action:", error)
-      toast.error("Failed to process action")
+      console.error("Error processing action:", error);
+      toast.error("Failed to process action");
     }
-  }
+  };
 
   return (
     <div className="bg-zinc-900 rounded-xl p-4 space-y-4">
@@ -81,7 +79,6 @@ export function CreatorCard({ creator, isInvited, onRemove }: CreatorCardProps) 
         ))}
       </div>
 
-      {/* 🔹 Button changes dynamically */}
       <Button
         variant="secondary"
         className="w-full bg-zinc-800 hover:bg-zinc-700 text-sm"
@@ -90,5 +87,5 @@ export function CreatorCard({ creator, isInvited, onRemove }: CreatorCardProps) 
         {isInvited ? "Cancel Invite" : "Send Invite"}
       </Button>
     </div>
-  )
+  );
 }
