@@ -157,14 +157,17 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
           </div>
         </div>
 
-        <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-white flex items-center justify-center">
-          <Image
-            src={campaign.imageUrl || "/placeholder.svg"}
-            alt={campaign.name}
-            fill
-            className="object-cover p-0"
-          />
-        </div>
+      <div className="relative h-65 md:h-90 rounded-xl overflow-hidden bg-white flex items-center justify-center">
+        <Image
+          src={campaign.imageUrl || "/placeholder.svg"}
+          alt={campaign.name}
+          fill
+          className="object-cover p-0"
+        />
+      </div>
+
+      
+
 
       </div>
     </div>
