@@ -196,7 +196,7 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
             src={campaign.imageUrl || "/placeholder.svg"}
             alt={campaign.name}
             fill
-            className="object-cover p-0"
+            className="object-contain p-0"
           />
         </div>
       </div>
