@@ -17,6 +17,10 @@ interface Campaign {
   launchDate: string
 }
 
+const handleCreateNewCampaign = () => {
+  window.location.href = "/campaigns/create"
+}
+
 export default function Home() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([])
   const [loading, setLoading] = useState(true)
@@ -42,6 +46,14 @@ export default function Home() {
     }
 
     fetchCampaigns()
+  }, [])
+
+  // Check URL query parameters for ?source=create_campaign
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('source') === 'create_campaign') {
+      setShowActive(false) // Set the toggle to Draft mode
+    }
   }, [])
 
   useEffect(() => {
@@ -77,23 +89,32 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
+      <div className="flex justify-between items-center mb-6">
+        {/* Title */}
+        <h1 className="text-4xl font-bold">Kliq Campaign Dashboard</h1>
 
-    <div className="flex justify-between items-center mb-6">
-      {/* Title */}
-      <h1 className="text-4xl font-bold">Kliq Campaign Dashboard</h1>
+        {/* Logo */}
+        <Link href="/">
+          <Image
+            src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
+            alt="Kliq Logo"
+            width={100}
+            height={25}
+          />
+        </Link>
+      </div>
 
-      {/* Logo */}
-      <Link href="/">
-      <Image
-        src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
-        alt="Kliq Logo"
-        width={100}
-        height={25}
-      />
-      </Link>
-    </div>
       {/* Top Bar: Toggle + AssignedBy Dropdown */}
       <div className="flex justify-between items-center mb-6">
+        <div>
+          <button
+            onClick={handleCreateNewCampaign}
+            className={`ml-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition`}
+          >
+            Create New Campaign
+          </button>
+        </div>
+
         {/* Toggle Switch */}
         <div className="flex bg-gray-800 p-1 rounded-full">
           <button
@@ -137,31 +158,18 @@ export default function Home() {
                 >
                   <span>All</span>
                 </li>
-                {assignedUsers.map((user) => {
-                  // const campaign = campaigns.find((c) => c.assignedBy === user)
-                  return (
-                    <li
-                      key={user}
-                      onClick={() => {
-                        setSelectedAssignedBy(user)
-                        setDropdownOpen(false)
-                      }}
-                      className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600 flex justify-between items-center"
-                    >
-                      <span>{user}</span>
-                      {/* <div>console.log({campaign?.id})</div> */}
-                      {/* {campaign?.assignedImageUrl && (
-                        <Image
-                          src={campaign.assignedImageUrl}
-                          alt={user}
-                          width={24}
-                          height={24}
-                          className="rounded-full"
-                        />
-                      )} */}
-                    </li>
-                  )
-                })}
+                {assignedUsers.map((user) => (
+                  <li
+                    key={user}
+                    onClick={() => {
+                      setSelectedAssignedBy(user)
+                      setDropdownOpen(false)
+                    }}
+                    className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600 flex justify-between items-center"
+                  >
+                    <span>{user}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           )}
@@ -185,28 +193,21 @@ export default function Home() {
                 <h3 className="mt-3 text-lg font-semibold">{campaign.name}</h3>
                 <p className="text-sm text-gray-400">{campaign.description}</p>
                 <div className="flex justify-between items-center mt-2">
-                <span
-                  className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${
-                    campaign.isActive ? "bg-emerald-900/50 text-emerald-400" : "bg-yellow-900/50 text-yellow-400"
-                  }`}
-                >
-                  {campaign.assignedBy}
-                </span>
-                <span className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${
-                    campaign.isActive ? "bg-white/600 text-black-00" : "bg-white/600 text-black-00"
-                  }`}>{campaign.launchDate}</span>
-                  </div>
-                {/* Assigned Image at Bottom Right */}
-                {/* {campaign.assignedImageUrl && (
-                  <Image
-                    src={imageError ?  campaign.assignedImageUrl : campaign.assignedImageUrl || "/placeholder.jpg"}
-                    alt={campaign.assignedBy}
-                    width={32}
-                    height={32}
-                    className="rounded-full absolute bottom-4 right-4 border-2 border-gray-700"
-                    onError={() => setImageError(true)} 
-                  />
-                )} */}
+                  <span
+                    className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${
+                      campaign.isActive ? "bg-emerald-900/50 text-emerald-400" : "bg-yellow-900/50 text-yellow-400"
+                    }`}
+                  >
+                    {campaign.assignedBy}
+                  </span>
+                  <span
+                    className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${
+                      campaign.isActive ? "bg-white/600 text-black-00" : "bg-white/600 text-black-00"
+                    }`}
+                  >
+                    {campaign.launchDate}
+                  </span>
+                </div>
               </div>
             </Link>
           ))}
