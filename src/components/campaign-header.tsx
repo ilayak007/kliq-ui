@@ -59,6 +59,11 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
       setShowConfetti(true)
 
       setTimeout(() => setShowConfetti(false), 3000)
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 3500)
+      
     } catch (error) {
       console.error("Error launching campaign:", error)
       toast.error("🚫 Failed to launch the campaign. Please try again.")
