@@ -56,11 +56,13 @@ export function InvitedCreators({ creators, updateMatchingCreators, campaignId, 
 
       updateMatchingCreators(response.data); // ✅ Ensure correct function call
 
-      // Scroll page to Matching Creators section
+      // Scroll page to the end (bottom of the page)
       setTimeout(() => {
-        sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.scrollTo({
+          top: document.body.scrollHeight,  // Scroll to the end of the page
+          behavior: "smooth",
+        });
       }, 100);
-
 
     } catch (error) {
       console.error("Error fetching creators:", error);
@@ -112,18 +114,18 @@ export function InvitedCreators({ creators, updateMatchingCreators, campaignId, 
         ))}
       </div>
 
-       {/* Warning Dialog for DRAFT Campaign */}
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogContent>
-              <DialogTitle className="text-white text-lg mb-2">Campaign in Draft</DialogTitle>
-              <DialogDescription className="text-gray-300 mb-4">
-                You cannot invite creators while the campaign is in DRAFT status.
-              </DialogDescription>
-              <DialogClose className="w-full bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-md mt-2">
-                Close
-              </DialogClose>
-            </DialogContent>
-          </Dialog>
+      {/* Warning Dialog for DRAFT Campaign */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogTitle className="text-white text-lg mb-2">Campaign in Draft</DialogTitle>
+          <DialogDescription className="text-gray-300 mb-4">
+            You cannot invite creators while the campaign is in DRAFT status.
+          </DialogDescription>
+          <DialogClose className="w-full bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-md mt-2">
+            Close
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
 
     </section>
   );
