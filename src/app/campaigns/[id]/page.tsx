@@ -54,7 +54,7 @@ export default function CampaignPage() {
   const [campaignData, setCampaignData] = useState<CampaignData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [matchingCreators, setMatchingCreators] = useState<Creator[]>([]); // ✅ Ensure correct typing
+  const [matchingCreators, setMatchingCreators] = useState<Creator[]>([]);
 
   useEffect(() => {
     const fetchCampaignData = async () => {
@@ -92,15 +92,10 @@ export default function CampaignPage() {
 
         <main className="space-y-12">
           <CampaignHeader campaign={campaignData.campaign} />          
-          {/* <InvitedCreators creators={campaignData?.campaign?.invitedCreators ?? []} />
-          <MatchingCreators 
-             campaignId={campaignData?.campaign?.id} 
-            isActive={campaignData?.campaign?.isActive} 
-          /> */}
-
+       
        <InvitedCreators
            creators={campaignData.campaign.invitedCreators ?? []}
-           updateMatchingCreators={setMatchingCreators} // ✅ Fix here
+           updateMatchingCreators={setMatchingCreators}
            campaignId={campaignData.campaign.id}
            isActive={campaignData.campaign.isActive}
          />
@@ -115,26 +110,4 @@ export default function CampaignPage() {
       </div>
     </div>
   )
-
-  // return (
-  //   <div className="min-h-screen bg-black text-white">
-  //     <div className="max-w-7xl mx-auto px-4 py-6">
-  //       <CampaignHeader campaign={campaignData.campaign} />
-
-  //       {/* ✅ Pass setMatchingCreators correctly */}
-  //       <InvitedCreators
-  //         creators={campaignData.campaign.invitedCreators ?? []}
-  //         updateMatchingCreators={setMatchingCreators} // ✅ Fix here
-  //         campaignId={campaignData.campaign.id}
-  //       />
-
-  //       <MatchingCreators
-  //         campaignId={campaignData.campaign.id}
-  //         isActive={campaignData.campaign.isActive}
-  //         matchingCreators={matchingCreators}
-  //         setMatchingCreators={setMatchingCreators}
-  //       />
-  //     </div>
-  //   </div>
-  // );
 }

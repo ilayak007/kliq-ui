@@ -23,7 +23,7 @@ interface InvitedCreatorsProps {
     campaignId: string;
     creator: Creator;
   }>;
-  updateMatchingCreators: (creators: Creator[]) => void; // ✅ Fix function type
+  updateMatchingCreators: (creators: Creator[]) => void;
   campaignId: string;
   isActive: boolean;
 }
@@ -54,7 +54,7 @@ export function InvitedCreators({ creators, updateMatchingCreators, campaignId, 
         params: { excludeCampaignId: campaignId },
       });
 
-      updateMatchingCreators(response.data); // ✅ Ensure correct function call
+      updateMatchingCreators(response.data);
 
       // Scroll page to the end (bottom of the page)
       setTimeout(() => {

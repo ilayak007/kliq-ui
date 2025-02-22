@@ -15,7 +15,7 @@ interface CreatorCardProps {
     platforms: string[];
     imageKey: string | null;
     imageUrl: string | null;
-    campaignId: string; // ✅ Ensure this is included
+    campaignId: string;
   };
   isInvited: boolean;
   onRemove: (creatorId: string) => void;

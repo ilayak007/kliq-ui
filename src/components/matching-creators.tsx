@@ -13,7 +13,7 @@ interface Creator {
   platforms: string[];
   imageUrl: string | null;
   imageKey: string | null;
-  campaignId?: string; // ✅ Added to match expected CreatorCardProps
+  campaignId?: string; 
 }
 
 interface MatchingCreatorsProps {
@@ -24,7 +24,6 @@ interface MatchingCreatorsProps {
 }
 
 export function MatchingCreators({ campaignId, isActive, matchingCreators, setMatchingCreators }: MatchingCreatorsProps) {
-  //const [creators, setCreators] = useState<Creator[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -71,7 +70,7 @@ export function MatchingCreators({ campaignId, isActive, matchingCreators, setMa
       setMatchingCreators(
         response.data.map((creator: Creator) => ({
           ...creator,
-          campaignId, // ✅ Ensure campaignId is included before passing to CreatorCard
+          campaignId,
         }))
       );
 

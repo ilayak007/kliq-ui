@@ -87,6 +87,11 @@ export default function Home() {
 
   const assignedUsers = Array.from(new Set(campaigns.map((c) => c.assignedBy))).sort()
 
+  const handleImageClick = () => {
+    window.location.reload()
+  }
+  
+
   return (
     <div className="min-h-screen bg-black text-white p-8">
       <div className="flex justify-between items-center mb-6">
@@ -94,14 +99,15 @@ export default function Home() {
         <h1 className="text-4xl font-bold">Kliq Campaign Dashboard</h1>
 
         {/* Logo */}
-        <Link href="/">
-          <Image
-            src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
-            alt="Kliq Logo"
-            width={100}
-            height={25}
-          />
-        </Link>
+           <a href="" onClick={handleImageClick} className="image-link">
+            <Image
+              src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
+              alt="Kliq Logo"
+              width={100}
+              height={25}
+              className="hover:scale-110 transition-transform duration-300"
+            />
+          </a>
       </div>
 
       {/* Top Bar: Toggle + AssignedBy Dropdown */}

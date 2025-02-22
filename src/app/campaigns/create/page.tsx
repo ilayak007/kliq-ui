@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { CampaignForm } from "@/components/campaign-form";
 import axios from "axios";
-import { uploadToS3 } from "@/utils/uploadToS3"; // Import the utility function
+import { uploadToS3 } from "@/utils/uploadToS3";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
@@ -58,7 +58,7 @@ export default function NewCampaignPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-4xl mx-auto px-4 py-6">
-        {/* ✅ Use a wrapper div with flex-grow */}
+        
         <header className="mb-8 flex items-center w-full">
           {/* Left: Back to Campaigns */}
           <Link href="/" className="text-gray-400 hover:text-white transition-colors flex items-center">
@@ -70,12 +70,15 @@ export default function NewCampaignPage() {
           <div className="flex-grow"></div>
 
           {/* Right: Kliq Logo */}
-          <Image
-            src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
-            alt="Kliq Logo"
-            width={100}
-            height={25}
-          />
+          <Link href={"/"}>
+              <Image
+                src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
+                alt="Kliq Logo"
+                width={100}
+                height={25}
+                className="hover:scale-110 transition-transform duration-300"
+              />
+          </Link>
         </header>
 
         <main>
