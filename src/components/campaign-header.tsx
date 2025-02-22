@@ -1,7 +1,7 @@
 import { useState } from "react"
 import axios from "axios"
 import Image from "next/image"
-import { Wallet } from "lucide-react"
+import { Wallet, Trash2 } from "lucide-react"
 import Confetti from "react-confetti"
 import { useWindowSize } from "react-use"
 import toast, { Toaster } from "react-hot-toast"
@@ -29,6 +29,7 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
   const [updatedLaunchDate, setUpdatedLaunchDate] = useState(campaign.launchDate)
   const [isActive, setIsActive] = useState(campaign.isActive)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const { width, height } = useWindowSize()
 
@@ -71,6 +72,21 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
       setIsLaunching(false)
     }
   }
+
+  const handleDeleteCampaign = async () => {
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+      await axios.delete(`${apiUrl}/campaigns/${campaign.id}`);
+      toast.success("✅ Campaign deleted successfully!");
+      setShowDeleteDialog(false);
+      setTimeout(() => {
+        window.location.href = "/"; // Redirect after deletion
+      }, 1500);
+    } catch (error) {
+      console.error("Error deleting campaign:", error);
+      toast.error("🚫 Failed to delete the campaign.");
+    }
+  };
 
   return (
     <div className="relative">
@@ -147,34 +163,66 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
             </div>
           </div>
 
-          <div>
-            <p className="text-sm text-gray-400 mb-3">Assigned Channels</p>
-            <div className="flex gap-3">
-              {campaign.assignedChannels.map((channel) => (
-                <div key={channel} className="w-8 h-8 flex items-center justify-center rounded bg-gray-700">
-                  {channel === "Instagram" && <InstagramIcon />}
-                  {channel === "YouTube" && <YouTubeIcon />}
-                  {channel === "Snapchat" && <SnapchatIcon />}
-                  {channel === "TikTok" && <TikTokIcon />}
-                </div>
-              ))}
+          <div className="grid grid-cols-2 gap-6">
+            <div>
+              <p className="text-sm text-gray-400 mb-3">Assigned Channels</p>
+              <div className="flex gap-3">
+                {campaign.assignedChannels.map((channel) => (
+                  <div key={channel} className="w-8 h-8 flex items-center justify-center rounded bg-gray-700">
+                    {channel === "Instagram" && <InstagramIcon />}
+                    {channel === "YouTube" && <YouTubeIcon />}
+                    {channel === "Snapchat" && <SnapchatIcon />}
+                    {channel === "TikTok" && <TikTokIcon />}
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {!isActive  &&  
+            <div>
+              <p className="text-sm text-gray-400 mb-3"></p>
+              <div className="relative">
+              <span title="Delete Campaign">
+                <Trash2 className="h-6 w-6 text-red-500 cursor-pointer" onClick={() => setShowDeleteDialog(true)} />
+              </span>
+              </div>
+            </div>
+          }
           </div>
         </div>
 
-      <div className="relative h-65 md:h-90 rounded-xl overflow-hidden bg-white flex items-center justify-center">
-        <Image
-          src={campaign.imageUrl || "/placeholder.svg"}
-          alt={campaign.name}
-          fill
-          className="object-cover p-0"
-        />
+        <div className="relative h-65 md:h-90 rounded-xl overflow-hidden bg-white flex items-center justify-center">
+          <Image
+            src={campaign.imageUrl || "/placeholder.svg"}
+            alt={campaign.name}
+            fill
+            className="object-cover p-0"
+          />
+        </div>
       </div>
 
-      
-
-
-      </div>
+      {/* Delete Confirmation Dialog */}
+      {showDeleteDialog && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <h2 className="text-lg font-bold mb-4 text-black">Are you sure you want to delete this campaign?</h2>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={handleDeleteCampaign}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg"
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={() => setShowDeleteDialog(false)}
+                className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg"
+              >
+                No, Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
