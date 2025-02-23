@@ -1,127 +1,152 @@
-"use client"
+/**
+ * @file Home.tsx
+ * @description Campaign Dashboard - Displays a list of campaigns with filtering options (Active/Draft, Assigned By).
+ * @author Ilayaraja Kasirajan
+ * @created [20-Feb-2025]
+ * @LastModified [23-Feb-2025]
+ */
 
-import { useEffect, useState, useRef } from "react"
-import Link from "next/link"
-import axios from "axios"
-import { Loader2, ChevronDown } from "lucide-react"
-import Image from "next/image"
+"use client";
+
+import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
+import axios from "axios";
+import { Loader2, ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 interface Campaign {
-  id: string
-  name: string
-  description: string
-  imageUrl: string
-  isActive: boolean
-  assignedBy: string
-  assignedImageUrl: string
-  launchDate: string
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  isActive: boolean;
+  assignedBy: string;
+  assignedImageUrl: string;
+  launchDate: string;
 }
 
+/**
+ * Redirects the user to the campaign creation page.
+ */
 const handleCreateNewCampaign = () => {
-  window.location.href = "/campaigns/create"
-}
+  window.location.href = "/campaigns/create";
+};
 
 export default function Home() {
-  const [campaigns, setCampaigns] = useState<Campaign[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [showActive, setShowActive] = useState(true)
-  const [selectedAssignedBy, setSelectedAssignedBy] = useState<string | null>(null)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [showActive, setShowActive] = useState(true);
+  const [selectedAssignedBy, setSelectedAssignedBy] = useState<string | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
+  /**
+   * Fetch campaigns from the backend on component mount.
+   */
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
-        const response = await axios.get(`${apiUrl}/campaigns`)
-        setCampaigns(response.data)
+        const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+        const response = await axios.get(`${apiUrl}/campaigns`);
+        setCampaigns(response.data);
       } catch (err) {
-        setError("Failed to load campaigns")
-        console.error(err)
+        setError("Failed to load campaigns");
+        console.error(err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchCampaigns()
-  }, [])
+    fetchCampaigns();
+  }, []);
 
-  // Check URL query parameters for ?source=create_campaign
+  /**
+   * Check for URL query parameters to set default view (e.g., open Drafts after campaign creation).
+   */
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    if (urlParams.get('source') === 'create_campaign') {
-      setShowActive(false) // Set the toggle to Draft mode
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("source") === "create_campaign") {
+      setShowActive(false); // Switch to Draft view after creating a campaign.
     }
-  }, [])
+  }, []);
 
+  /**
+   * Handle clicks outside the dropdown to close it.
+   */
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setDropdownOpen(false)
+        setDropdownOpen(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <Loader2 className="animate-spin h-10 w-10 text-gray-400" />
       </div>
-    )
+    );
   }
 
   if (error) {
-    return <div className="text-red-500 text-center mt-10">{error}</div>
+    return <div className="text-red-500 text-center mt-10">{error}</div>;
   }
 
+  /**
+   * Filter campaigns based on active/draft status and selected "Assigned By" user.
+   */
   const filteredCampaigns = selectedAssignedBy
     ? campaigns.filter((c) => c.assignedBy === selectedAssignedBy)
     : showActive
     ? campaigns.filter((c) => c.isActive)
-    : campaigns.filter((c) => !c.isActive)
+    : campaigns.filter((c) => !c.isActive);
 
-  const assignedUsers = Array.from(new Set(campaigns.map((c) => c.assignedBy))).sort()
+  const assignedUsers = Array.from(new Set(campaigns.map((c) => c.assignedBy))).sort();
 
+  /**
+   * Handle logo click to reload the page.
+   */
   const handleImageClick = () => {
-    window.location.reload()
-  }
-  
+    window.location.reload();
+  };
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
+      {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
-        {/* Title */}
         <h1 className="text-4xl font-bold">Kliq Campaign Dashboard</h1>
 
-        {/* Logo */}
-           <a href="" onClick={handleImageClick} className="image-link">
-            <Image
-              src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
-              alt="Kliq Logo"
-              width={100}
-              height={25}
-              className="hover:scale-110 transition-transform duration-300"
-            />
-          </a>
+        {/* Kliq Logo with reload on click */}
+        <a href="" onClick={handleImageClick} className="image-link">
+          <Image
+            src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
+            alt="Kliq Logo"
+            width={100}
+            height={25}
+            className="hover:scale-110 transition-transform duration-300"
+          />
+        </a>
       </div>
 
-      {/* Top Bar: Toggle + AssignedBy Dropdown */}
+      {/* Top Bar with Create Button, Toggle, and Dropdown */}
       <div className="flex justify-between items-center mb-6">
+        {/* Create Campaign Button */}
         <div>
           <button
             onClick={handleCreateNewCampaign}
-            className={`ml-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition`}
+            className="ml-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition"
           >
             Create New Campaign
           </button>
         </div>
 
-        {/* Toggle Switch */}
+        {/* Active/Draft Toggle */}
         <div className="flex bg-gray-800 p-1 rounded-full">
           <button
             onClick={() => setShowActive(true)}
@@ -155,23 +180,25 @@ export default function Home() {
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-gray-700 shadow-lg rounded-lg overflow-hidden z-50 border border-gray-600">
               <ul className="max-h-60 overflow-auto">
+                {/* Option to reset filter */}
                 <li
                   onClick={() => {
-                    setSelectedAssignedBy(null)
-                    setDropdownOpen(false)
+                    setSelectedAssignedBy(null);
+                    setDropdownOpen(false);
                   }}
-                  className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600 flex justify-between items-center"
+                  className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600"
                 >
                   <span>All</span>
                 </li>
+                {/* List of unique assigned users */}
                 {assignedUsers.map((user) => (
                   <li
                     key={user}
                     onClick={() => {
-                      setSelectedAssignedBy(user)
-                      setDropdownOpen(false)
+                      setSelectedAssignedBy(user);
+                      setDropdownOpen(false);
                     }}
-                    className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600 flex justify-between items-center"
+                    className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600"
                   >
                     <span>{user}</span>
                   </li>
@@ -182,6 +209,7 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Campaign Grid */}
       {filteredCampaigns.length === 0 ? (
         <p className="text-gray-400 text-center">No campaigns found.</p>
       ) : (
@@ -199,18 +227,14 @@ export default function Home() {
                 <h3 className="mt-3 text-lg font-semibold">{campaign.name}</h3>
                 <p className="text-sm text-gray-400">{campaign.description}</p>
                 <div className="flex justify-between items-center mt-2">
-                  <span
-                    className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${
-                      campaign.isActive ? "bg-emerald-900/50 text-emerald-400" : "bg-yellow-900/50 text-yellow-400"
-                    }`}
-                  >
+                  {/* Assigned By */}
+                  <span className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
+                    campaign.isActive ? "bg-emerald-900/50 text-emerald-400" : "bg-yellow-900/50 text-yellow-400"
+                  }`}>
                     {campaign.assignedBy}
                   </span>
-                  <span
-                    className={`inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full ${
-                      campaign.isActive ? "bg-white/600 text-black-00" : "bg-white/600 text-black-00"
-                    }`}
-                  >
+                  {/* Launch Date */}
+                  <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-white/600 text-black">
                     {campaign.launchDate}
                   </span>
                 </div>
@@ -220,5 +244,5 @@ export default function Home() {
         </div>
       )}
     </div>
-  )
+  );
 }

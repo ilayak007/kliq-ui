@@ -1,8 +1,17 @@
+/**
+ * @file CamapaignForm.tsx
+ * @description This component has the form elements to create a new campaign. 
+ * 
+ * @author [Ilayaraja Kasirajan]
+ * @created [20-Feb-2025]
+ * @lastModified [23-Feb-2025]
+ */
+
 "use client"
 
 import type React from "react"
 import { useState } from "react"
-import { CalendarIcon} from "lucide-react"
+import { CalendarIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -15,11 +24,13 @@ import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { InstagramIcon, SnapchatIcon, TikTokIcon, YouTubeIcon } from "./icons"
 
+// Props for CampaignForm component
 interface CampaignFormProps {
-  onSubmit: (formData: FormData) => void
-  isSubmitting: boolean
+  onSubmit: (formData: FormData) => void // Callback for form submission
+  isSubmitting: boolean // Indicates if form is in the submitting state
 }
 
+// Interface for form validation errors
 interface FormErrors {
   name?: string
   description?: string
@@ -29,46 +40,48 @@ interface FormErrors {
   image?: string
 }
 
+// CampaignForm component for creating a new campaign
 export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
-  const [launchDate, setLaunchDate] = useState<Date>()
-  const [budget, setBudget] = useState([5000])
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
-  const [errors, setErrors] = useState<FormErrors>({})
-  const [selectedChannels, setSelectedChannels] = useState<string[]>([])
+  const [launchDate, setLaunchDate] = useState<Date>() // Stores selected launch date
+  const [budget, setBudget] = useState([5000]) // Stores selected budget (default 5000)
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false) // Toggles calendar popover
+  const [errors, setErrors] = useState<FormErrors>({}) // Stores form validation errors
+  const [selectedChannels, setSelectedChannels] = useState<string[]>([]) // Tracks selected social channels
 
+  // Validates the form fields and sets errors if any
   const validateForm = (formData: FormData): boolean => {
     const newErrors: FormErrors = {}
 
-    // Campaign Name validation
+    // Validate Campaign Name
     const name = formData.get("name") as string
     if (!name || name.trim() === "") {
       newErrors.name = "Campaign name is required"
     }
 
-    // Description validation
+    // Validate Description
     const description = formData.get("description") as string
     if (!description || description.trim() === "") {
       newErrors.description = "Campaign description is required"
     }
 
-    // Budget validation
+    // Validate Budget
     if (budget[0] < 5000) {
       newErrors.budget = "Budget must be at least 5000 SAR"
     }
 
-    // Launch Date validation
+    // Validate Launch Date
     if (!launchDate) {
       newErrors.launchDate = "Launch date is required"
     } else if (launchDate <= new Date()) {
       newErrors.launchDate = "Launch date must be in the future"
     }
 
-    // Channels validation
+    // Validate Selected Channels
     if (selectedChannels.length === 0) {
       newErrors.channels = "At least one channel must be selected"
     }
 
-    // Image validation
+    // Validate Campaign Image
     const image = formData.get("image") as File
     if (!image || image.name === "") {
       newErrors.image = "Campaign image is required"
@@ -80,6 +93,7 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
     return Object.keys(newErrors).length === 0
   }
 
+  // Handles form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -91,12 +105,14 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
     }
   }
 
+  // Handles date selection from the calendar
   const handleDateSelect = (date: Date | undefined) => {
     setLaunchDate(date)
     setIsCalendarOpen(false)
     setErrors((prev) => ({ ...prev, launchDate: undefined }))
   }
 
+  // Handles channel selection/deselection
   const handleChannelChange = (channel: string, checked: boolean) => {
     setSelectedChannels((prev) => {
       const newChannels = checked ? [...prev, channel] : prev.filter((ch) => ch !== channel)
@@ -110,11 +126,13 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
     })
   }
 
+  // Renders error message for form fields
   const ErrorMessage = ({ message }: { message?: string }) =>
     message ? <span className="text-red-500 text-sm mt-1">{message}</span> : null
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
+      {/* Campaign Name Field */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label htmlFor="name">Campaign Name</Label>
@@ -131,6 +149,7 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
         />
       </div>
 
+      {/* Campaign Description Field */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label htmlFor="description">Campaign Description</Label>
@@ -147,6 +166,7 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
         />
       </div>
 
+      {/* Budget Slider */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label>Assigned Budget</Label>
@@ -168,6 +188,7 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
         </div>
       </div>
 
+      {/* Launch Date Picker */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label>Launch Date</Label>
@@ -202,6 +223,7 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
         </Popover>
       </div>
 
+      {/* Channel Selection */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label>Assigned Channels</Label>
@@ -231,6 +253,7 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
         </div>
       </div>
 
+      {/* Image Upload */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label htmlFor="image">Campaign Image</Label>
@@ -249,7 +272,7 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
             Browse
           </Button>
           <span className="text-sm text-gray-400" id="file-name">
-            No file selected ( Only jpg format allowed )
+            No file selected (Only jpg format allowed)
           </span>
         </div>
         <Input
@@ -266,10 +289,10 @@ export function CampaignForm({ onSubmit, isSubmitting }: CampaignFormProps) {
         />
       </div>
 
+      {/* Submit Button */}
       <Button type="submit" disabled={isSubmitting} className="w-full bg-indigo-600 hover:bg-indigo-700">
         {isSubmitting ? "Creating Campaign..." : "Create Campaign"}
       </Button>
     </form>
   )
 }
-

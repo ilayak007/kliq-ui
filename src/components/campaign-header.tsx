@@ -1,3 +1,15 @@
+/**
+ * CampaignHeader Component
+ * 
+ * Displays campaign details, including status, description, budget, launch date, and assigned channels.
+ * Allows launching a campaign and deleting it with confirmation.
+ * Shows confetti on successful launch and toast notifications for feedback.
+ * 
+ * @author Ilayaraja Kasirajan
+ * @created [20-Feb-2025]
+ * @lastModified [23-Feb-2025]
+ */
+
 import { useState } from "react"
 import axios from "axios"
 import Image from "next/image"
@@ -24,23 +36,28 @@ interface CampaignHeaderProps {
 }
 
 export function CampaignHeader({ campaign }: CampaignHeaderProps) {
+  // Local state management
   const [imageError, setImageError] = useState(false)
   const [isLaunching, setIsLaunching] = useState(false)
   const [updatedLaunchDate, setUpdatedLaunchDate] = useState(campaign.launchDate)
   const [isActive, setIsActive] = useState(campaign.isActive)
   const [showConfetti, setShowConfetti] = useState(false)
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   const { width, height } = useWindowSize()
 
+  /**
+   * Handles the "Launch Now" action for a campaign.
+   * Updates the launch date and shows confetti upon success.
+   */
   const handleLaunchNow = async () => {
     setIsLaunching(true)
 
     try {
       const today = new Date()
-
       const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
-      // Make API call to update the campaign
+
+      // API call to update the campaign's launch date
       await axios.put(`${apiUrl}/campaigns/${campaign.id}`, {
         launchDate: today.toISOString(),
       })
@@ -51,20 +68,20 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
         day: "numeric",
       })
 
-      // Update UI state after successful API call
+      // Update local state on success
       setUpdatedLaunchDate(formattedDate)
       setIsActive(true)
-
       toast.success("🎉 Campaign launched successfully!")
-
       setShowConfetti(true)
 
+      // Stop confetti after 3 seconds
       setTimeout(() => setShowConfetti(false), 3000)
 
+      // Reload the page to reflect changes
       setTimeout(() => {
         window.location.reload()
       }, 3500)
-      
+
     } catch (error) {
       console.error("Error launching campaign:", error)
       toast.error("🚫 Failed to launch the campaign. Please try again.")
@@ -73,32 +90,40 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
     }
   }
 
+  /**
+   * Handles the deletion of a campaign.
+   * Shows a confirmation dialog and redirects on success.
+   */
   const handleDeleteCampaign = async () => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
-      await axios.delete(`${apiUrl}/campaigns/${campaign.id}`);
-      toast.success("✅ Campaign deleted successfully!");
-      setShowDeleteDialog(false);
+      const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL
+      await axios.delete(`${apiUrl}/campaigns/${campaign.id}`)
+      toast.success("✅ Campaign deleted successfully!")
+      setShowDeleteDialog(false)
+
+      // Redirect to homepage after deletion
       setTimeout(() => {
-        window.location.href = "/"; // Redirect after deletion
-      }, 1500);
+        window.location.href = "/"
+      }, 1500)
     } catch (error) {
-      console.error("Error deleting campaign:", error);
-      toast.error("🚫 Failed to delete the campaign.");
+      console.error("Error deleting campaign:", error)
+      toast.error("🚫 Failed to delete the campaign.")
     }
-  };
+  }
 
   return (
     <div className="relative">
-      {/* Confetti */}
+      {/* Confetti Animation */}
       {showConfetti && <Confetti width={width} height={height} />}
 
       {/* Toast Notifications */}
       <Toaster position="bottom-right" />
 
       <div className="grid md:grid-cols-2 gap-8">
+        {/* Left section - Campaign details */}
         <div className="space-y-6">
           <div className="space-y-4">
+            {/* Campaign Status */}
             {isActive ? (
               <span className="inline-block px-2 py-1 text-xs font-semibold bg-emerald-900/50 text-emerald-400 rounded-full">
                 Active
@@ -109,10 +134,12 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
               </span>
             )}
 
+            {/* Campaign Title & Description */}
             <h1 className="text-4xl font-bold">{campaign.name}</h1>
             <p className="text-gray-400">{campaign.description}</p>
           </div>
 
+          {/* Assigned By Info */}
           <div className="flex items-center gap-3">
             <Image
               src={imageError ? "/placeholder.jpg" : campaign.assignedImageUrl || "/placeholder.jpg"}
@@ -130,6 +157,7 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
             </div>
           </div>
 
+          {/* Budget & Launch Date */}
           <div className="grid grid-cols-2 gap-6">
             <div>
               <p className="text-sm text-gray-400 mb-1">Assigned Budget</p>
@@ -148,7 +176,7 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
                 </div>
               </div>
 
-              {/* Conditionally render Launch Now button */}
+              {/* Launch Now Button */}
               {!isActive && (
                 <button
                   onClick={handleLaunchNow}
@@ -163,6 +191,7 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
             </div>
           </div>
 
+          {/* Assigned Channels & Delete Button */}
           <div className="grid grid-cols-2 gap-6">
             <div>
               <p className="text-sm text-gray-400 mb-3">Assigned Channels</p>
@@ -178,19 +207,18 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
               </div>
             </div>
 
-            {!isActive  &&  
-            <div>
-              <p className="text-sm text-gray-400 mb-3"></p>
+            {/* Delete Campaign Button (visible if inactive) */}
+            {!isActive && (
               <div className="relative">
-              <span title="Delete Campaign">
-                <Trash2 className="h-6 w-6 text-red-500 cursor-pointer" onClick={() => setShowDeleteDialog(true)} />
-              </span>
+                <span title="Delete Campaign">
+                  <Trash2 className="h-6 w-6 text-red-500 cursor-pointer" onClick={() => setShowDeleteDialog(true)} />
+                </span>
               </div>
-            </div>
-          }
+            )}
           </div>
         </div>
 
+        {/* Right section - Campaign Image */}
         <div className="relative h-65 md:h-90 rounded-xl overflow-hidden bg-white flex items-center justify-center">
           <Image
             src={campaign.imageUrl || "/placeholder.svg"}
