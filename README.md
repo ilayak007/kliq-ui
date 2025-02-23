@@ -27,4 +27,4 @@ Kliq ui 🎯
 
 🌍 Live Demo
 
-🔗 Deployed URL: https://kliq-service.vercel.app
+🔗 Deployed URL: https://kliq-ui.vercel.app
