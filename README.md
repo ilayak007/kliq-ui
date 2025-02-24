@@ -1,41 +1,30 @@
-<<<<<<< HEAD
-# kliq-ui
-front end service for the kliq
-=======
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Kliq ui 🎯
 
-## Getting Started
+`kliq-ui` is a frontend application built for brand and campaign management. It connects to the `kliq-service` backend to fetch and display data related to campaigns, creators, and invites. This project is designed to help businesses manage their marketing campaigns and connect with the most relevant creators for their brand.
 
-First, run the development server:
+🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+✅ **Campaign Management****: View and manage campaign details such as assigned creators, campaign status, and images.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+✅ **Campaign Management**: View and manage campaign details such as assigned creators, campaign status, and images.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+✅ **Creator Matching**: Search for top creators who align with the campaign's goals and invite them to participate.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+✅ **Invite and Remove Creators**: Send invites to creators, and cancel invites if needed.
 
-## Learn More
+✅ **Search and Filter**: Efficiently search for creators, filter by relevant criteria, and interact with their profiles.
 
-To learn more about Next.js, take a look at the following resources:
+✅ **Mobile-Friendly UI**: The UI is responsive and designed for both desktop and mobile devices.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+✅ **Real-Time Updates**: Data is dynamically fetched from the `kliq-service` backend to ensure up-to-date campaign and creator information.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🛠 Tech Stack
 
-## Deploy on Vercel
+  - **Next.js**: A React framework for building server-side rendered and statically generated web applications.
+  - **Tailwind CSS**: A utility-first CSS framework for creating custom designs without writing CSS.
+  - **Axios**: A promise-based HTTP client for making requests to the backend API.
+  - **Lucide Icons**: A collection of icons used in the UI components.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+🌍 Live Demo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
->>>>>>> d409c20 (Initial commit from Create Next App)
+🔗 Deployed URL: https://kliq-ui.vercel.app
