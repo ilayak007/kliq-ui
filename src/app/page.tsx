@@ -117,41 +117,39 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
+    <div className="min-h-screen bg-black text-white p-4 sm:p-8">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-4xl font-bold">Kliq Campaign Dashboard</h1>
-
+      <div className="flex flex-wrap justify-between items-center mb-6">
+        <h1 className="text-2xl sm:text-4xl font-bold">Kliq Campaign Dashboard</h1>
+  
         {/* Kliq Logo with reload on click */}
-        <a href="" onClick={handleImageClick} className="image-link">
+        <a href="" onClick={handleImageClick}>
           <Image
             src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
             alt="Kliq Logo"
-            width={100}
-            height={25}
+            width={80}
+            height={20}
             className="hover:scale-110 transition-transform duration-300"
           />
         </a>
       </div>
-
+  
       {/* Top Bar with Create Button, Toggle, and Dropdown */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col md:flex-row md:justify-between items-center mb-6 gap-4">
         {/* Create Campaign Button */}
-        <div>
-          <button
-            onClick={handleCreateNewCampaign}
-            className="ml-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition"
-          >
-            Create New Campaign
-          </button>
-        </div>
-
+        <button
+          onClick={handleCreateNewCampaign}
+          className="w-full md:w-auto px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition"
+        >
+          Create New Campaign
+        </button>
+  
         {/* Active/Draft Toggle */}
-        <div className="flex bg-gray-800 p-1 rounded-full">
+        <div className="flex w-full md:w-auto bg-gray-800 p-1 rounded-full">
           <button
             onClick={() => setShowActive(true)}
             disabled={selectedAssignedBy !== null}
-            className={`px-4 py-2 text-sm font-semibold rounded-full transition-all ${
+            className={`flex-1 md:flex-none px-4 py-2 text-sm font-semibold rounded-full transition-all ${
               showActive ? "bg-emerald-500 text-black" : "text-gray-400"
             } ${selectedAssignedBy ? "opacity-50 cursor-not-allowed" : ""}`}
           >
@@ -160,60 +158,65 @@ export default function Home() {
           <button
             onClick={() => setShowActive(false)}
             disabled={selectedAssignedBy !== null}
-            className={`px-4 py-2 text-sm font-semibold rounded-full transition-all ${
+            className={`flex-1 md:flex-none px-4 py-2 text-sm font-semibold rounded-full transition-all ${
               !showActive ? "bg-yellow-500 text-black" : "text-gray-400"
             } ${selectedAssignedBy ? "opacity-50 cursor-not-allowed" : ""}`}
           >
             Draft
           </button>
         </div>
-
+  
         {/* Assigned By Dropdown */}
-        <div className="relative z-50" ref={dropdownRef}>
-          <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center px-4 py-2 bg-gray-800 rounded-full text-white hover:bg-gray-700"
-          >
-            <span>{selectedAssignedBy || "Created By"}</span>
-            <ChevronDown className="ml-2 h-4 w-4" />
-          </button>
-          {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-gray-700 shadow-lg rounded-lg overflow-hidden z-50 border border-gray-600">
-              <ul className="max-h-60 overflow-auto">
-                {/* Option to reset filter */}
-                <li
-                  onClick={() => {
-                    setSelectedAssignedBy(null);
-                    setDropdownOpen(false);
-                  }}
-                  className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600"
-                >
-                  <span>All</span>
-                </li>
-                {/* List of unique assigned users */}
-                {assignedUsers.map((user) => (
-                  <li
-                    key={user}
-                    onClick={() => {
-                      setSelectedAssignedBy(user);
-                      setDropdownOpen(false);
-                    }}
-                    className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600"
-                  >
-                    <span>{user}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      </div>
+ {/* Assigned By Dropdown */}
+<div className="relative z-50 ml-auto" ref={dropdownRef}>
+  <button
+    onClick={() => setDropdownOpen(!dropdownOpen)}
+    className="flex items-center px-4 py-2 bg-gray-800 rounded-full text-white hover:bg-gray-700"
+  >
+    <span>{selectedAssignedBy || "Created By"}</span>
+    <ChevronDown className="ml-2 h-4 w-4" />
+  </button>
 
+  {dropdownOpen && (
+    <div className="absolute right-0 mt-2 w-48 bg-gray-700 shadow-lg rounded-lg overflow-hidden border border-gray-600 z-50">
+      <ul className="max-h-60 overflow-auto">
+        {/* Option to reset filter */}
+        <li
+          onClick={() => {
+            setSelectedAssignedBy(null);
+            setDropdownOpen(false);
+          }}
+          className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600"
+        >
+          <span>All</span>
+        </li>
+        {/* List of unique assigned users */}
+        {assignedUsers.map((user) => (
+          <li
+            key={user}
+            onClick={() => {
+              setSelectedAssignedBy(user);
+              setDropdownOpen(false);
+            }}
+            className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600"
+          >
+            <span>{user}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>
+
+
+
+      </div>
+  
       {/* Campaign Grid */}
       {filteredCampaigns.length === 0 ? (
         <p className="text-gray-400 text-center">No campaigns found.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCampaigns.map((campaign) => (
             <Link key={campaign.id} href={`/campaigns/${campaign.id}`} className="group block">
               <div className="bg-gray-900 p-4 rounded-lg transition-all group-hover:scale-105 relative">
@@ -227,13 +230,13 @@ export default function Home() {
                 <h3 className="mt-3 text-lg font-semibold">{campaign.name}</h3>
                 <p className="text-sm text-gray-400">{campaign.description}</p>
                 <div className="flex justify-between items-center mt-2">
-                  {/* Assigned By */}
-                  <span className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
-                    campaign.isActive ? "bg-emerald-900/50 text-emerald-400" : "bg-yellow-900/50 text-yellow-400"
-                  }`}>
+                  <span
+                    className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
+                      campaign.isActive ? "bg-emerald-900/50 text-emerald-400" : "bg-yellow-900/50 text-yellow-400"
+                    }`}
+                  >
                     {campaign.assignedBy}
                   </span>
-                  {/* Launch Date */}
                   <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-white/600 text-black">
                     {campaign.launchDate}
                   </span>
@@ -245,4 +248,5 @@ export default function Home() {
       )}
     </div>
   );
+  
 }
