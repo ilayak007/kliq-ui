@@ -137,13 +137,14 @@ export default function Home() {
       {/* Top Bar with Create Button, Toggle, and Dropdown */}
       <div className="flex flex-col md:flex-row md:justify-between items-center mb-6 gap-4">
         {/* Create Campaign Button */}
-        <button
-          onClick={handleCreateNewCampaign}
-          className="w-full md:w-auto px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition"
-        >
-          Create New Campaign
-        </button>
-  
+     
+      <button
+        onClick={handleCreateNewCampaign}
+        className="hidden md:block px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition"
+      >
+        Create New Campaign
+      </button>
+
         {/* Active/Draft Toggle */}
         <div className="flex w-full md:w-auto bg-gray-800 p-1 rounded-full">
           <button
@@ -246,6 +247,15 @@ export default function Home() {
           ))}
         </div>
       )}
+      {/* Sticky button for mobile view */}
+<div className="md:hidden fixed bottom-4 left-0 right-0 px-4">
+  <button
+    onClick={handleCreateNewCampaign}
+    className="w-full px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg shadow-lg"
+  >
+    Create New Campaign
+  </button>
+</div>
     </div>
   );
   
