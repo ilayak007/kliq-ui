@@ -219,7 +219,7 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
         </div>
 
         {/* Right section - Campaign Image */}
-        <div className="relative h-65 md:h-90 rounded-xl overflow-hidden bg-white flex items-center justify-center">
+        <div className="relative h-[260px] md:h-[360px] rounded-xl overflow-hidden bg-white flex items-center justify-center">
           <Image
             src={campaign.imageUrl || "/placeholder.svg"}
             alt={campaign.name}
@@ -227,7 +227,7 @@ export function CampaignHeader({ campaign }: CampaignHeaderProps) {
             className="object-contain p-0"
           />
         </div>
-      </div>
+        </div>
 
       {/* Delete Confirmation Dialog */}
       {showDeleteDialog && (
