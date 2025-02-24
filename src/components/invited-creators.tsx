@@ -95,27 +95,30 @@ export function InvitedCreators({ creators, updateMatchingCreators, campaignId, 
 
   return (
     <section className="space-y-6 bg-zinc-900 p-6 rounded-lg" ref={sectionRef}>
-      {/* Section Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-full bg-emerald-900/50 flex items-center justify-center">
-            <Users className="w-5 h-5 text-emerald-400" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold">Invited Creators</h2>
-            <p className="text-sm text-gray-400">Invite creators to activate your campaign</p>
-          </div>
-        </div>
 
-        {/* Search & Invite Button */}
-        <Button
-          className="bg-indigo-600 hover:bg-indigo-700 text-white"
-          onClick={handleSearchAndInvite}
-          disabled={loading}
-        >
-          {loading ? "Searching..." : "Search & Invite"}
-        </Button>
-      </div>
+{/* Section Header */}
+<div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+  <div className="flex items-center gap-4">
+    <div className="w-10 h-10 rounded-full bg-emerald-900/50 flex items-center justify-center">
+      <Users className="w-5 h-5 text-emerald-400" />
+    </div>
+    <div>
+      <h2 className="text-xl font-semibold">Invited Creators</h2>
+      <p className="text-sm text-gray-400">Invite creators to activate your campaign</p>
+    </div>
+  </div>
+
+  {/* Search & Invite Button */}
+  <div className="w-full md:w-auto">
+    <Button
+      className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white"
+      onClick={handleSearchAndInvite} 
+      disabled={loading}
+    >
+      {loading ? "Searching..." : "Search & Invite"}
+    </Button>
+  </div>
+</div>
 
       {/* Invited Creators Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
