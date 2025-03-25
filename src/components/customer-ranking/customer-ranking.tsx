@@ -4,7 +4,7 @@ import { CustomerCard } from "./customer-card"
 interface Customer {
   customerId: number
   customerName: string
-  title: string
+  profileMessage: string
   profileImage: string
   totalPoints: number
   totalWon: number
@@ -30,7 +30,7 @@ export function CustomerRanking({ customers, highlightedCustomerId }: CustomerRa
           key={customer.customerId}
           rank={index + 1}
           customerName={customer.customerName}
-          title={customer.title}
+          profileMessage={customer.profileMessage}
           totalPoints={customer.totalPoints}
           totalWon={customer.totalWon}
           totalLost={customer.totalLost}

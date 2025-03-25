@@ -5,7 +5,7 @@ import { useRef, useEffect } from "react"
 interface CustomerCardProps {
   rank: number;
   customerName: string;
-  title: string;
+  profileMessage: string;
   profileImage: string;
   totalPoints: number;
   totalWon: number;
@@ -53,7 +53,7 @@ const getMedalIcon = (rank: number) => {
 export function CustomerCard({
   rank,
   customerName,
-  title,
+  profileMessage,
   totalPoints,
   totalWon,
   totalLost,
@@ -121,7 +121,7 @@ export function CustomerCard({
                   <span className="ml-2 text-2xl">{getMedalIcon(rank)}</span>
                 )}
               </h3>
-              <p className="text-sm text-black/80">Title: {title}</p>
+              <p className="text-sm text-black/80">{profileMessage}</p>
             </div>
           </div>
           <div className="text-center">
@@ -176,7 +176,7 @@ export function CustomerCard({
               )}
             </h3>
             <p className="text-lg text-black/80 group-hover:translate-x-1 transition-transform duration-300 delay-75">
-              Title: {title}
+              {profileMessage}
             </p>
           </div>
         </div>

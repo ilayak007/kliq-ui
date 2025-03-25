@@ -9,7 +9,7 @@ import axios from "axios"
 interface CustomerData {
   customerId: number
   customerName: string
-  title: string
+  profileMessage: string
   profileImage: string
   totalPoints: number
   totalParticipated: number
