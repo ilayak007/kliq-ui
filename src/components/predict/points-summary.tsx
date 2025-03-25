@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { Star } from 'lucide-react'
 
 interface PointsSummaryProps {
   data: {
@@ -67,8 +68,20 @@ export function PointsSummary({ data }: PointsSummaryProps) {
           </div>
           <Link
             href={"/customer-ranking"}
-            className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors flex-1"
+            className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors flex-1 relative"
           >
+                      {/* Conditionally render the star */}
+          {data.position >= 1 && data.position <= 3 && (
+            <Star
+              className={`absolute top-2 right-2 w-6 h-6 ${
+                data.position === 1 ? 'text-yellow-500' :
+                data.position === 2 ? 'text-gray-400' :
+                'text-amber-700'
+              }`}
+              fill="currentColor"
+            />
+          )}
+
             <span className="text-sm text-gray-600">Your Position</span>
             <span className="text-2xl font-bold">
               {data.totalPredicted === 0 ? '?' : data.position}
@@ -101,8 +114,19 @@ export function PointsSummary({ data }: PointsSummaryProps) {
 
         <Link
           href={"/customer-ranking"}
-          className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors"
+          className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors relative"
         >
+          {/* Conditionally render the star */}
+          {data.position >= 1 && data.position <= 3 && (
+            <Star
+              className={`absolute top-2 right-2 w-6 h-6 ${
+                data.position === 1 ? 'text-yellow-500' :
+                data.position === 2 ? 'text-gray-400' :
+                'text-amber-700'
+              }`}
+              fill="currentColor"
+            />
+          )}
           <span className="text-sm text-gray-600">Your Position</span>
           <span className="text-4xl font-bold">
             {data.totalPredicted === 0 ? '?' : data.position}
