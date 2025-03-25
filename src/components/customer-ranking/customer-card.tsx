@@ -72,7 +72,7 @@ const getHoverBackgroundColor = (rank: number): string => {
 export function CustomerCard({ customerId, rank, customerName, title, totalPoints, totalWon, totalLost, profileImage }: CustomerCardProps) {
   const bgGradient = getBackgroundColor(rank)
   const hoverBgGradient = getHoverBackgroundColor(rank)
-
+  console.log(customerId)
   return (
     <div
       className={`relative rounded-2xl bg-gradient-to-r ${bgGradient} ${hoverBgGradient} p-4 sm:p-6 shadow-md 

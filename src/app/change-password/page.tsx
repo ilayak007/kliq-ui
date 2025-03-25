@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast, ToastContainer } from 'react-toastify'
@@ -59,8 +59,9 @@ export default function ChangePasswordForm() {
         setApiError(response.data.message || 'Failed to update password')
         toast.error(response.data.message || 'Failed to update password')
       }
-    } catch (error: any) {
-      const errorMessage = error?.response?.data?.message || 'Something went wrong'
+    } catch (error: unknown) {
+      const err = error as AxiosError<{ message: string }>
+      const errorMessage = err.response?.data?.message || 'Something went wrong'
       setApiError(errorMessage)
       toast.error(errorMessage)
     } finally {

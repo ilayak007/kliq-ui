@@ -82,27 +82,26 @@ export function Header() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Scatter animation
-      controls.start(i => ({
+      controls.start({
         x: Math.random() * 100 - 50,
         y: Math.random() * 80 - 40,
         rotate: Math.random() * 180 - 90,
         transition: { duration: 0.6 }
-      }))
-
-      // Re-arrange back
+      });
+  
       setTimeout(() => {
-        controls.start(i => ({
+        controls.start({
           x: 0,
           y: 0,
           rotate: 0,
           transition: { duration: 0.6 }
-        }))
-      }, 1000)
-    }, 2000)
-
-    return () => clearTimeout(timer)
-  }, [controls])
+        });
+      }, 1000);
+    }, 2000);
+  
+    return () => clearTimeout(timer);
+  }, [controls]);
+  
 
   return (
     <header className="fixed top-0 left-0 right-0 w-full bg-blue-900 text-white z-50 shadow-md">

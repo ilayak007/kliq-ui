@@ -16,7 +16,7 @@ interface CustomerRankingProps {
   title?: string
 }
 
-export function CustomerRanking({ customers, title = "Top Customers" }: CustomerRankingProps) {
+export function CustomerRanking({ customers }: CustomerRankingProps) {
   // Sort customers by totalPoints descending (highest first)
   const sortedCustomers = [...customers].sort((a, b) => b.totalPoints - a.totalPoints)
 

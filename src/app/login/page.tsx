@@ -61,9 +61,13 @@ export default function WorldCupChallengePage() {
       localStorage.setItem("customerName", customerName)
 
       router.push("/predict")
-    } catch (err: any) {
-      console.error("Login failed:", err.response?.data || err.message)
-      setErrors({ api: err.response?.data?.message || "Login failed. Please try again." })
+    } catch (err: unknown) {
+      console.error("Login failed:", err)
+      if (axios.isAxiosError(err)) {
+        setErrors({ api: err.response?.data?.message || "Login failed. Please try again." })
+      } else {
+        setErrors({ api: "Login failed. Please try again." })
+      }
     } finally {
       setLoading(false) // Stop spinner
     }
@@ -119,7 +123,7 @@ export default function WorldCupChallengePage() {
             <li>• Predict correctly - earn 50 points</li>
             <li>• Incorrect prediction - lose 20 points</li>
             <li>• Top 3 winners will get Gift Vouchers</li>
-            <li>• Participation voucher also there. So why waiting. Let's Predict 🚀 🚀 🚀</li>
+            <li>• Participation voucher also there. So why waiting. Let&apos;s Predict 🚀 🚀 🚀</li>
           </ul>
         </div>
 

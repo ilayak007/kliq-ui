@@ -43,7 +43,7 @@ export function ParticipationRules() {
             <li>Predict correctly - earn 50 points</li>
             <li>Incorrect prediction - lose 20 points</li>
             <li>Top 3 will get Gift Vouchers</li>
-            <li>Participation voucher also there. So why waiting. <b>Let's Predict</b> 🚀 🚀 🚀</li>
+            <li>Participation voucher also there. So why waiting. <b>Let&apos;s Predict</b> 🚀 🚀 🚀</li>
           </ul>
         </div>
       )}
