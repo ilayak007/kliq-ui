@@ -35,8 +35,7 @@ export default function CustomerRankingPage() {
     const fetchCustomers = async () => {
       try {
         setLoading(true)
-        //const apiUrl = "http://localhost:3000"
-        const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+        const apiUrl = "http://localhost:3000"
         const response = await axios.get(`${apiUrl}/api/customers/dashboard`)
         setCustomers(response.data.data)
         setError(null)
@@ -78,22 +77,22 @@ export default function CustomerRankingPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Flex container to align heading and buttons */}
+      {/* Flex container for heading and buttons */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
         <h1 className="text-3xl font-bold mb-4 sm:mb-0">Rankings</h1>
 
-        {/* Button container fixed with gap and responsive layout */}
-        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+        {/* Buttons always in a row, wrap if needed */}
+        <div className="flex flex-row gap-4 flex-wrap">
           <button
             onClick={handleFindMeClick}
-            className="bg-blue-300 p-4 rounded-lg cursor-pointer hover:bg-blue-400 transition-all w-full sm:w-auto"
+            className="bg-blue-300 p-3 rounded-lg cursor-pointer hover:bg-blue-400 transition-all text-sm"
           >
             Find Me
           </button>
 
           <button
             onClick={handleDashboardClick}
-            className="bg-purple-300 p-4 rounded-lg cursor-pointer hover:bg-purple-400 transition-all w-full sm:w-auto"
+            className="bg-purple-300 p-3 rounded-lg cursor-pointer hover:bg-purple-400 transition-all text-sm"
           >
             Go to My Dashboard
           </button>
