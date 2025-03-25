@@ -24,6 +24,13 @@ export function Header() {
 
       {/* Rankings Section with Link */}
       <div className="ml-auto flex items-center gap-4 w-full sm:w-auto justify-end">
+         {/* Profile Message */}
+         <Link href="/profile-message">
+          <div className="bg-blue-300 p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-blue-400 transition-all w-full sm:w-auto">
+            <span className="text-sm text-black-800">Profile Message</span>
+          </div>
+        </Link>
+
         <Link href="/customer-ranking">
           <div className="bg-purple-300 p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-purple-400 transition-all w-full sm:w-auto">
             <span className="text-sm text-black-800">Check Rankings</span>
