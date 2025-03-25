@@ -16,6 +16,7 @@ export default function WorldCupChallengePage() {
   const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
+  const s3BaseUrl = "https://kliq-demo-images.s3.eu-north-1.amazonaws.com/"
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken")
@@ -183,17 +184,31 @@ export default function WorldCupChallengePage() {
 
       {/* Flags */}
       <div className="w-full mb-6">
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-6">
-          {["qa", "br", "ar", "fr", "es"].map((code) => (
-            <img key={code} src={`https://flagcdn.com/w80/${code}.png`} className="w-16 h-12 rounded border" alt={`${code} flag`} />
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-y-4 gap-x-6 justify-items-center">
+          {["RCB", "KKR", "CSK", "MI", "GT", "PBKS", "RR", "LSG", "SRH", "DC"].map((code, index) => (
+            <img
+              key={code}
+              src={`${s3BaseUrl}${code}.jpg`}
+              className={`w-20 h-14 sm:w-20 sm:h-14 rounded border object-cover 
+                ${index === 4 ? 'sm:mb-8' : ''}
+                `}
+              alt={`${code} flag`}
+            />
           ))}
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+
+        {/* <div className="grid grid-cols-2 sm:grid-cols-5 gap-y-4 gap-x-6 justify-items-center mt-4">
           {["de", "pt", "nl", "us", "jp"].map((code) => (
-            <img key={code} src={`https://flagcdn.com/w80/${code}.png`} className="w-16 h-12 rounded border" alt={`${code} flag`} />
+            <img
+              key={code}
+              src={`https://flagcdn.com/w80/${code}.png`}
+              className="w-20 h-14 sm:w-16 sm:h-12 rounded border object-cover"
+              alt={`${code} flag`}
+            />
           ))}
-        </div>
+        </div> */}
       </div>
+
 
       {/* Modal */}
       {showModal && (
