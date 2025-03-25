@@ -115,19 +115,11 @@ export default function WorldCupChallengePage() {
         </div>
       </div>
 
+      
       {/* Content */}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {/* How to participate */}
-        <div>
-          <h2 className="text-l font-low mb-3 text-white bg-[#8B1538] p-2 rounded">How to participate?</h2>
-          <ul className="space-y-1.5">
-            <li>• Log-in to participate and predict the outcome of each game</li>
-            <li>• Predict correctly - earn 50 points</li>
-            <li>• Incorrect prediction - lose 20 points</li>
-            <li>• Top 3 winners will get Gift Vouchers</li>
-            <li>• Participation voucher also there. So why waiting. Let&apos;s Predict 🚀 🚀 🚀</li>
-          </ul>
-        </div>
+        
 
         {/* Login */}
         <div className="bg-white p-5 rounded-lg shadow-sm">
@@ -179,6 +171,17 @@ export default function WorldCupChallengePage() {
               Sign up
             </button>
           </p>
+        </div>
+
+        <div>
+          <h2 className="text-l font-low mb-3 text-white bg-[#8B1538] p-2 rounded">How to participate?</h2>
+          <ul className="space-y-1.5">
+            <li>• Log-in to participate and predict the outcome of each game</li>
+            <li>• Predict correctly - earn 50 points</li>
+            <li>• Incorrect prediction - lose 20 points</li>
+            <li>• Top 3 winners will get Gift Vouchers</li>
+            <li>• Participation voucher also there. So why waiting. Let&apos;s Predict 🚀 🚀 🚀</li>
+          </ul>
         </div>
       </div>
 
