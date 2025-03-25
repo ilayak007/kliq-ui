@@ -14,9 +14,10 @@ interface Customer {
 interface CustomerRankingProps {
   customers: Customer[]
   title?: string
+  highlightedCustomerId?: number | null
 }
 
-export function CustomerRanking({ customers }: CustomerRankingProps) {
+export function CustomerRanking({ customers, highlightedCustomerId }: CustomerRankingProps) {
   // Sort customers by totalPoints descending (highest first)
   const sortedCustomers = [...customers].sort((a, b) => b.totalPoints - a.totalPoints)
 
@@ -26,7 +27,7 @@ export function CustomerRanking({ customers }: CustomerRankingProps) {
 
       {sortedCustomers.map((customer, index) => (
         <CustomerCard
-          key={customer.customerId} 
+          key={customer.customerId}
           rank={index + 1}
           customerName={customer.customerName}
           title={customer.title}
@@ -34,6 +35,7 @@ export function CustomerRanking({ customers }: CustomerRankingProps) {
           totalWon={customer.totalWon}
           totalLost={customer.totalLost}
           profileImage={customer.profileImage}
+          isHighlighted={customer.customerId === highlightedCustomerId}
         />
       ))}
     </div>
