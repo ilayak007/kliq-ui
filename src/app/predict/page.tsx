@@ -166,7 +166,7 @@ export default function FifaChallengePage() {
         setResults(response.data)
         setErrorResults(null)
       } catch (error) {
-        //console.error("Error fetching results:", error)
+        console.log("Error fetching results:", error)
         //setErrorResults("Failed to load results")
       } finally {
         setLoadingResults(false)
