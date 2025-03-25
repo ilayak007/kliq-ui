@@ -40,6 +40,16 @@ const getInitials = (name?: string) => {
     : name.substring(0, 2).toUpperCase();
 };
 
+const getMedalIcon = (rank: number) => {
+  switch (rank) {
+    case 1: return "🥇";
+    case 2: return "🥈";
+    case 3: return "🥉";
+    default: return null;
+  }
+};
+
+
 export function CustomerCard({
   rank,
   customerName,
@@ -105,7 +115,12 @@ export function CustomerCard({
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-black">{customerName}</h3>
+              <h3 className="text-xl font-bold text-black flex items-center">
+                {customerName}
+                {getMedalIcon(rank) && (
+                  <span className="ml-2 text-2xl">{getMedalIcon(rank)}</span>
+                )}
+              </h3>
               <p className="text-sm text-black/80">Title: {title}</p>
             </div>
           </div>
@@ -154,8 +169,11 @@ export function CustomerCard({
             </div>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-black group-hover:translate-x-1 transition-transform duration-300">
+            <h3 className="text-2xl font-bold text-black group-hover:translate-x-1 transition-transform duration-300 flex items-center">
               {customerName}
+              {getMedalIcon(rank) && (
+              <span className="ml-10 text-5xl">{getMedalIcon(rank)}</span>
+              )}
             </h3>
             <p className="text-lg text-black/80 group-hover:translate-x-1 transition-transform duration-300 delay-75">
               Title: {title}
