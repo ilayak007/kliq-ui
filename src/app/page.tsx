@@ -13,6 +13,7 @@ import Link from "next/link";
 import axios from "axios";
 import { Loader2, ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { redirect } from "next/navigation"; // Import redirect from next/navigation
 
 interface Campaign {
   id: string;
@@ -41,6 +42,11 @@ export default function Home() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Perform redirection after the component is mounted
+  useEffect(() => {
+    redirect("/login"); // Redirect to /predict
+  }, []);
 
   /**
    * Fetch campaigns from the backend on component mount.
@@ -123,7 +129,7 @@ export default function Home() {
         <h1 className="text-2xl sm:text-4xl font-bold">Kliq Campaign Dashboard</h1>
   
         {/* Kliq Logo with reload on click */}
-        <a href="" onClick={handleImageClick}>
+        <a href="" onClick={handleImageClick} className="justify-self-end">
           <Image
             src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
             alt="Kliq Logo"
