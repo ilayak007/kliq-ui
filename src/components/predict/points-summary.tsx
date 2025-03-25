@@ -39,7 +39,7 @@ export function PointsSummary({ data }: PointsSummaryProps) {
 
   // Determine background color based on totalPointsEarned
   const pointsEarnedBgColor = data.totalPointsEarned >= 0 ? 'bg-green-200' : 'bg-red-200'
-  const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+  // const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
   
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-2">
@@ -66,7 +66,7 @@ export function PointsSummary({ data }: PointsSummaryProps) {
 
       {/* ✅ Linked Position */}
       <Link
-        href={`${apiUrl}/customer-ranking`}
+        href={"/customer-ranking"}
         className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors"
       >
         <span className="text-sm text-gray-600">Your Position</span>
