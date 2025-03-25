@@ -23,20 +23,21 @@ export function Header() {
       </div>
 
       {/* Rankings Section with Link */}
-      <div className="ml-auto flex items-center gap-4 w-full sm:w-auto justify-end">
-         {/* Profile Message */}
-         <Link href="/profile-message">
-          <div className="bg-blue-300 p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-blue-400 transition-all w-full sm:w-auto">
-            <span className="text-sm text-black-800">Profile Message</span>
-          </div>
-        </Link>
+    <div className="ml-auto flex flex-row items-center gap-4 w-full sm:w-auto">
+      {/* Profile Message */}
+      <Link href="/profile-message" className="w-1/2 sm:w-auto">
+        <div className="bg-blue-300 p-4 rounded-lg flex items-center justify-center cursor-pointer hover:bg-blue-400 transition-all w-full">
+          <span className="text-sm text-black-800">Profile Message</span>
+        </div>
+      </Link>
 
-        <Link href="/customer-ranking">
-          <div className="bg-purple-300 p-4 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-purple-400 transition-all w-full sm:w-auto">
-            <span className="text-sm text-black-800">Check Rankings</span>
-          </div>
-        </Link>
-      </div>
+      <Link href="/customer-ranking" className="w-1/2 sm:w-auto">
+        <div className="bg-purple-300 p-4 rounded-lg flex items-center justify-center cursor-pointer hover:bg-purple-400 transition-all w-full">
+          <span className="text-sm text-black-800">Check Rankings</span>
+        </div>
+      </Link>
+    </div>
+
     </div>
   );
 }
