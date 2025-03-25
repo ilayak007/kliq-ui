@@ -35,7 +35,8 @@ export default function CustomerRankingPage() {
     const fetchCustomers = async () => {
       try {
         setLoading(true)
-        const response = await axios.get("http://localhost:3000/api/customers/dashboard")
+        const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+        const response = await axios.get(`${apiUrl}/api/customers/dashboard`)
         setCustomers(response.data.data)
         setError(null)
       } catch (err) {

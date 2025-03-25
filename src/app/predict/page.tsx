@@ -111,6 +111,8 @@ export default function FifaChallengePage() {
     setDate(currentDate)
   }, [])
 
+  const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+
   // Fetch points summary with guard
   useEffect(() => {
     if (!customerId) return; // ✅ Guard added
@@ -118,7 +120,7 @@ export default function FifaChallengePage() {
     const fetchPointsSummary = async () => {
       try {
         setLoadingPointsSummary(true)
-        const response = await axios.get(`http://localhost:3000/api/customer/points-summary?customerId=${customerId}`)
+        const response = await axios.get(`${apiUrl}/api/customer/points-summary?customerId=${customerId}`)
         setPointsSummary(response.data.data)
         setErrorPointsSummary(null)
       } catch (error) {
@@ -139,7 +141,7 @@ export default function FifaChallengePage() {
     const fetchTodaysMatches = async () => {
       try {
         setLoadingTodaysMatches(true)
-        const response = await axios.get(`http://localhost:3000/api/matches/todays-matches?customerId=${customerId}`)
+        const response = await axios.get(`${apiUrl}/api/matches/todays-matches?customerId=${customerId}`)
         setTodaysMatches(response.data.data)
         setErrorTodaysMatches(null)
       } catch (error) {
@@ -160,7 +162,7 @@ export default function FifaChallengePage() {
     const fetchResults = async () => {
       try {
         setLoadingResults(true)
-        const response = await axios.get(`http://localhost:3000/api/customers/${customerId}/detailed-summary`)
+        const response = await axios.get(`${apiUrl}/api/customers/${customerId}/detailed-summary`)
         setResults(response.data)
         setErrorResults(null)
       } catch (error) {
@@ -177,7 +179,7 @@ export default function FifaChallengePage() {
   // Prediction Submit
   const handlePredictionSubmit = async (matchId: number, prediction: string) => {
     try {
-      await axios.post("http://localhost:3000/api/predictions/", {
+      await axios.post(`${apiUrl}/api/predictions/`, {
         matchId,
         customerSelected: prediction,
         customerId,
@@ -189,7 +191,7 @@ export default function FifaChallengePage() {
       setShowSuccessModal(true)
 
       // Re-fetch today's matches
-      const response = await axios.get(`http://localhost:3000/api/matches/todays-matches?customerId=${customerId}`)
+      const response = await axios.get(`${apiUrl}/api/matches/todays-matches?customerId=${customerId}`)
       setTodaysMatches(response.data.data)
     } catch (error) {
       console.error("Error submitting prediction:", error)

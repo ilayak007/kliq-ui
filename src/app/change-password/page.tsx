@@ -38,7 +38,8 @@ export default function ChangePasswordForm() {
 
     setLoading(true)
     try {
-      const response = await axios.post('http://localhost:3000/api/customer/change-password', {
+      const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+      const response = await axios.post(`${apiUrl}/api/customer/change-password`, {
         email,
         oldPassword,
         newPassword,
