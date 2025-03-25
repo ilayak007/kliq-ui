@@ -34,11 +34,11 @@ export function CustomerRankingWidget({ customers, limit = 3 }: CustomerRankingW
           <CustomerCard
             key={customer.id}
             rank={customer.rank}
-            name={customer.name}
+            customerName={customer.name}
             title={customer.title}
-            popularity={customer.popularity}
-            likes={customer.likes}
-            followed={customer.followed}
+            totalPoints={customer.popularity}
+            totalWon={customer.likes}
+            totalLost={customer.followed}
             profileImage={customer.profileImage}
           />
         ))}

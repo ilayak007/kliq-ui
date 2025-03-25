@@ -27,7 +27,6 @@ export function CustomerRanking({ customers }: CustomerRankingProps) {
       {sortedCustomers.map((customer, index) => (
         <CustomerCard
           key={customer.customerId} 
-          customerId={customer.customerId}
           rank={index + 1}
           customerName={customer.customerName}
           title={customer.title}

@@ -2,7 +2,6 @@ import Image from "next/image"
 import { MoreHorizontal, Award, ChevronRight } from "lucide-react"
 
 interface CustomerCardProps {
-  customerId: number
   rank: number
   customerName: string
   title: string
@@ -69,10 +68,9 @@ const getHoverBackgroundColor = (rank: number): string => {
   }
 }
 
-export function CustomerCard({ customerId, rank, customerName, title, totalPoints, totalWon, totalLost, profileImage }: CustomerCardProps) {
+export function CustomerCard({ rank, customerName, title, totalPoints, totalWon, totalLost, profileImage }: CustomerCardProps) {
   const bgGradient = getBackgroundColor(rank)
   const hoverBgGradient = getHoverBackgroundColor(rank)
-  console.log(customerId)
   return (
     <div
       className={`relative rounded-2xl bg-gradient-to-r ${bgGradient} ${hoverBgGradient} p-4 sm:p-6 shadow-md 
