@@ -26,6 +26,7 @@ interface MatchData {
   teamA: string
   teamB: string  
   matchStartDateTime: string
+  totalVoteCount: number
 }
 
 interface ResultData {
@@ -141,6 +142,7 @@ export default function FifaChallengePage() {
     const fetchTodaysMatches = async () => {
       try {
         setLoadingTodaysMatches(true)
+        //const apiUrl = "http://localhost:3000"
         const response = await axios.get(`${apiUrl}/api/matches/todays-matches?customerId=${customerId}`)
         setTodaysMatches(response.data.data)
         setErrorTodaysMatches(null)

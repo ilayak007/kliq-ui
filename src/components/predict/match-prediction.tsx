@@ -13,6 +13,7 @@ interface MatchProps {
     teamA: string
     teamB: string
     matchStartDateTime: string
+    totalVoteCount: number
   }
   onSubmit: (prediction: string) => void
 }
@@ -39,7 +40,7 @@ export function MatchPrediction({ match, onSubmit }: MatchProps) {
   const teamBImageUrl = `${s3BaseUrl}${match.teamB}.jpg`
 
   return (
-    <div className="border border-gray-200 rounded-lg p-4">
+    <div className="border border-gray-200 rounded-lg p-4 relative" >
       <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">        
 
         <RadioGroup 
@@ -88,6 +89,10 @@ export function MatchPrediction({ match, onSubmit }: MatchProps) {
           </Label>
         </RadioGroup>
 
+        {/* Vote Count Text */}
+        <div className="absolute md:top-2 md:right-4 bottom-2 left-4 text-green-600 text-sm md:bottom-auto md:left-auto">
+          {match.totalVoteCount} voted till now
+        </div>
         {/* Submit Button */}
         <Button
           className="bg-orange-300 hover:bg-orange-400 text-black self-end"
