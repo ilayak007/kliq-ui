@@ -70,7 +70,9 @@ export function PointsSummary({ data }: PointsSummaryProps) {
         className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors"
       >
         <span className="text-sm text-gray-600">Your Position</span>
-        <span className="text-4xl font-bold">{data.position}</span>
+        <span className="text-4xl font-bold">
+            {data.totalPredicted === 0 ? '?' : data.position}
+          </span>
       </Link>
     </div>
   )

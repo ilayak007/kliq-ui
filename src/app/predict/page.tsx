@@ -166,8 +166,8 @@ export default function FifaChallengePage() {
         setResults(response.data)
         setErrorResults(null)
       } catch (error) {
-        console.error("Error fetching results:", error)
-        setErrorResults("Failed to load results")
+        //console.error("Error fetching results:", error)
+        //setErrorResults("Failed to load results")
       } finally {
         setLoadingResults(false)
       }
@@ -259,7 +259,7 @@ export default function FifaChallengePage() {
             ) : results && results.length > 0 ? (
               <ResultsTable results={results} />
             ) : (
-              <div className="text-center py-4">No results available</div>
+              <div className="text-center text-red-500 py-4">No results available</div>
             )}
           </div>
         )}
