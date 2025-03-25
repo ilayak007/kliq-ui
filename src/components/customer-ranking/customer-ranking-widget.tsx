@@ -4,7 +4,7 @@ interface Customer {
   id: string
   rank: number
   name: string
-  title: string
+  profileMessage: string
   popularity: number
   likes: number
   followed: number
@@ -35,7 +35,7 @@ export function CustomerRankingWidget({ customers, limit = 3 }: CustomerRankingW
             key={customer.id}
             rank={customer.rank}
             customerName={customer.name}
-            title={customer.title}
+            profileMessage={customer.profileMessage}
             totalPoints={customer.popularity}
             totalWon={customer.likes}
             totalLost={customer.followed}
