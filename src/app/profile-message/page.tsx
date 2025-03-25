@@ -14,8 +14,8 @@ export default function ProfilePage() {
         return;
       }
       
-      //const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
-      const apiUrl = "http://localhost:3000"
+      const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+      //const apiUrl = "http://localhost:3000"
       const response = await axios.put(`${apiUrl}/api/update-customers`, {
         customerId: Number(customerId),
         profileMessage: message,
