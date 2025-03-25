@@ -26,7 +26,7 @@ export function ResultsTable({ results }: ResultsTableProps) {
           {results.map((result, index) => (
             <tr
               key={index}
-              className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer transition-all"
+              className="border-b border-gray-300 hover:bg-gray-100 cursor-pointer transition-all"
             >
               <td className="py-4">{result.matchDate}</td>
               <td className="py-4 break-words">

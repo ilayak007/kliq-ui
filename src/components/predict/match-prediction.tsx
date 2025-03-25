@@ -40,7 +40,7 @@ export function MatchPrediction({ match, onSubmit }: MatchProps) {
   const teamBImageUrl = `${s3BaseUrl}${match.teamB}.jpg`
 
   return (
-    <div className="border border-gray-200 rounded-lg p-4 relative" >
+    <div className="border border-gray-300 rounded-lg p-4 relative" >
       <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">        
 
         <RadioGroup 

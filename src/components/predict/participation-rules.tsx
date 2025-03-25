@@ -9,7 +9,7 @@ export function ParticipationRules() {
   };
 
   return (
-    <div className="border border-gray-200 rounded-lg p-6">
+    <div className="border border-gray-300 rounded-lg p-4">
       {/* Flex container to align title and "Know More" or "Less..." */}
       <div className="flex justify-between items-center">
         <h2 className="font-semibold text-lg mb-4">How to participate?</h2>
