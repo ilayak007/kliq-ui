@@ -37,43 +37,78 @@ export function PointsSummary({ data }: PointsSummaryProps) {
     return () => clearInterval(interval)
   }, [data.totalPointsEarned])
 
-  // Determine background color based on totalPointsEarned
   const pointsEarnedBgColor = data.totalPointsEarned >= 0 ? 'bg-green-200' : 'bg-red-200'
-  // const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
-  
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-2">
-      <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center">
-        <span className="text-sm text-gray-600">Predicted</span>
-        <span className="text-4xl font-bold">{data.totalPredicted}</span>
+    <div>
+      {/* ✅ Mobile View */}
+      <div className="flex flex-col gap-2 sm:hidden">
+        {/* First row - Predicted, Won, Lost */}
+        <div className="flex gap-2">
+          <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center flex-1">
+            <span className="text-sm text-gray-600">Predicted</span>
+            <span className="text-2xl font-bold">{data.totalPredicted}</span>
+          </div>
+          <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center flex-1">
+            <span className="text-sm text-gray-600">Won</span>
+            <span className="text-2xl font-bold">{data.totalWon}</span>
+          </div>
+          <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center flex-1">
+            <span className="text-sm text-gray-600">Lost</span>
+            <span className="text-2xl font-bold">{data.totalLost}</span>
+          </div>
+        </div>
+
+        {/* Second row - Points Earned and Your Position */}
+        <div className="flex gap-2">
+          <div className={`${pointsEarnedBgColor} p-4 rounded-lg flex flex-col items-center justify-center flex-1`}>
+            <span className="text-sm text-gray-600">Points Earned</span>
+            <span className="text-2xl font-bold">{animatedPoints}</span>
+          </div>
+          <Link
+            href={"/customer-ranking"}
+            className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors flex-1"
+          >
+            <span className="text-sm text-gray-600">Your Position</span>
+            <span className="text-2xl font-bold">
+              {data.totalPredicted === 0 ? '?' : data.position}
+            </span>
+          </Link>
+        </div>
       </div>
 
-      <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center">
-        <span className="text-sm text-gray-600">Won</span>
-        <span className="text-4xl font-bold">{data.totalWon}</span>
-      </div>
+      {/* ✅ Desktop View */}
+      <div className="hidden sm:grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-2">
+        <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center">
+          <span className="text-sm text-gray-600">Predicted</span>
+          <span className="text-4xl font-bold">{data.totalPredicted}</span>
+        </div>
 
-      <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center">
-        <span className="text-sm text-gray-600">Lost</span>
-        <span className="text-4xl font-bold">{data.totalLost}</span>
-      </div>
+        <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center">
+          <span className="text-sm text-gray-600">Won</span>
+          <span className="text-4xl font-bold">{data.totalWon}</span>
+        </div>
 
-      {/* Dynamically applying background color for Points Earned */}
-      <div className={`${pointsEarnedBgColor} p-4 rounded-lg flex flex-col items-center justify-center`}>
-        <span className="text-sm text-gray-600">Points Earned</span>
-        <span className="text-4xl font-bold">{animatedPoints}</span>
-      </div>
+        <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center">
+          <span className="text-sm text-gray-600">Lost</span>
+          <span className="text-4xl font-bold">{data.totalLost}</span>
+        </div>
 
-      {/* ✅ Linked Position */}
-      <Link
-        href={"/customer-ranking"}
-        className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors"
-      >
-        <span className="text-sm text-gray-600">Your Position</span>
-        <span className="text-4xl font-bold">
+        <div className={`${pointsEarnedBgColor} p-4 rounded-lg flex flex-col items-center justify-center`}>
+          <span className="text-sm text-gray-600">Points Earned</span>
+          <span className="text-4xl font-bold">{animatedPoints}</span>
+        </div>
+
+        <Link
+          href={"/customer-ranking"}
+          className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors"
+        >
+          <span className="text-sm text-gray-600">Your Position</span>
+          <span className="text-4xl font-bold">
             {data.totalPredicted === 0 ? '?' : data.position}
           </span>
-      </Link>
+        </Link>
+      </div>
     </div>
   )
 }
