@@ -47,7 +47,7 @@ export default function WorldCupChallengePage() {
 
     setLoading(true) // Start spinner
     try {
-      const response = await axios.post("http://localhost:3000/api/customer/login", {
+      const response = await axios.post("/api/customer/login", {
         email,
         password,
       })
