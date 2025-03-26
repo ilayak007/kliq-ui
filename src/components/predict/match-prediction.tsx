@@ -39,6 +39,26 @@ export function MatchPrediction({ match, onSubmit }: MatchProps) {
   const teamAImageUrl = `${s3BaseUrl}${match.teamA}.jpg`
   const teamBImageUrl = `${s3BaseUrl}${match.teamB}.jpg`
 
+  // Convert match start time and subtract 1 hour (60 * 60 * 1000 ms)
+  const matchStartTime = new Date(match.matchStartDateTime).getTime() - (60 * 60 * 1000);
+  const currentTime = new Date().getTime();
+  const diffInMinutes = Math.floor((matchStartTime - currentTime) / (1000 * 60));
+
+  // Format the time left
+  let timeLeftText = "";
+  if (diffInMinutes > 0 && diffInMinutes <= 180) {
+    if (diffInMinutes > 60) {
+      const hours = Math.floor(diffInMinutes / 60);
+      const minutes = diffInMinutes % 60;
+      timeLeftText = `${hours} hr${hours > 1 ? 's' : ''} ${minutes} min left`;
+    } else {
+      timeLeftText = `${diffInMinutes} min left`;
+    }
+  }
+
+
+
+
   return (
     <div className="border border-gray-300 rounded-lg p-4 relative" >
       <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">        
@@ -89,10 +109,12 @@ export function MatchPrediction({ match, onSubmit }: MatchProps) {
           </Label>
         </RadioGroup>
 
-        {/* Vote Count Text */}
         <div className="absolute md:top-2 md:right-4 bottom-2 left-4 text-green-600 text-sm md:bottom-auto md:left-auto">
         {match.totalVoteCount} {match.totalVoteCount === 1 ? "vote" : "votes"} till now
-        </div>
+        {timeLeftText && <span className="ml-2 text-red-500"> | {timeLeftText}</span>}
+      </div>
+
+
         {/* Submit Button */}
         <Button
           className="bg-orange-300 hover:bg-orange-400 text-black self-end"
