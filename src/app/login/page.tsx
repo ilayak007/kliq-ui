@@ -118,9 +118,6 @@ export default function WorldCupChallengePage() {
       
       {/* Content */}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        {/* How to participate */}
-        
-
         {/* Login */}
         <div className="bg-white p-5 rounded-lg shadow-sm">
           <h2 className="text-xl font-bold mb-3">Login</h2>
@@ -173,6 +170,7 @@ export default function WorldCupChallengePage() {
           </p>
         </div>
 
+        {/* How to participate */}
         <div>
           <h2 className="text-l font-low mb-3 text-white bg-[#8B1538] p-2 rounded">How to participate?</h2>
           <ul className="space-y-1.5">

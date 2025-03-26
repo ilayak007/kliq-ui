@@ -164,6 +164,7 @@ export default function FifaChallengePage() {
     const fetchResults = async () => {
       try {
         setLoadingResults(true)
+        const apiUrl = "http://localhost:3000"
         const response = await axios.get(`${apiUrl}/api/customers/${customerId}/detailed-summary`)
         setResults(response.data)
         setErrorResults(null)

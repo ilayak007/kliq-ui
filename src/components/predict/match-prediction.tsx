@@ -91,7 +91,7 @@ export function MatchPrediction({ match, onSubmit }: MatchProps) {
 
         {/* Vote Count Text */}
         <div className="absolute md:top-2 md:right-4 bottom-2 left-4 text-green-600 text-sm md:bottom-auto md:left-auto">
-          {match.totalVoteCount} voted till now
+        {match.totalVoteCount} {match.totalVoteCount === 1 ? "vote" : "votes"} till now
         </div>
         {/* Submit Button */}
         <Button
