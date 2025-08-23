@@ -7,7 +7,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Campaign Dashboard",
+  title: "Predict Asia Cup",
   description: "Campaign management interface for creators",
 }
 
