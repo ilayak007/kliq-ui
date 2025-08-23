@@ -79,7 +79,7 @@ export default function WorldCupChallengePage() {
     <div className="min-h-screen bg-[#f8f8f8] flex flex-col items-center px-4 py-4 max-w-6xl mx-auto">
       {/* Header */}
       <div className="text-center mb-4">
-        <h1 className="text-3xl md:text-4xl font-bold text-[#8B1538]">IPL Challenge !!!</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-[#8B1538]">Asia Cup Challenge !!!</h1>
         <p className="text-gray-800 mt-1">Log in - Predict the winner - Earn points - Win vouchers</p>
       </div>
 
@@ -87,18 +87,18 @@ export default function WorldCupChallengePage() {
       <div className="w-full h-[150px] sm:h-[180px] md:h-[220px] mb-6 flex overflow-hidden rounded-lg">
         <div className="w-[30%] h-full flex">
           <div className="w-1/2 h-full relative">
-            <Image src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/kohli.jpg" alt="Kohli" fill className="object-cover" />
+            <Image src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/salman-pak.jpg" alt="Kohli" fill className="object-cover" />
           </div>
           <div className="w-1/2 h-full relative">
-            <Image src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/rohit.jpg" alt="Rohit" fill className="object-cover" />
+            <Image src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/surya.jpg" alt="Rohit" fill className="object-cover" />
           </div>
         </div>
 
         <div className="w-[40%] h-full bg-[#8B1538] flex items-center justify-center">
           <div className="relative w-[95%] h-full mx-auto">
             <Image
-              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/ipl1.jpg"
-              alt="IPL"
+              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/asia-cup.jpg"
+              alt="Asia Cup"
               fill
               className="object-cover rounded"
             />
@@ -107,10 +107,10 @@ export default function WorldCupChallengePage() {
 
         <div className="w-[30%] h-full flex">
           <div className="w-1/2 h-full relative">
-            <Image src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/dhoni.jpg" alt="Dhoni" fill className="object-cover" />
+            <Image src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/mendis.jpg" alt="Dhoni" fill className="object-cover" />
           </div>
           <div className="w-1/2 h-full relative">
-            <Image src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/cummins.jpg" alt="Cummins" fill className="object-cover" />
+            <Image src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/Litton.jpg" alt="Cummins" fill className="object-cover" />
           </div>
         </div>
       </div>
@@ -185,8 +185,8 @@ export default function WorldCupChallengePage() {
 
       {/* Flags */}
       <div className="w-full mb-6">
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-y-4 gap-x-6 justify-items-center">
-          {["RCB", "KKR", "CSK", "MI", "GT", "PBKS", "RR", "LSG", "SRH", "DC"].map((code, index) => (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-10 gap-x-6 justify-items-center">
+          {["AFG", "BAN", "HKG", "IND", "OMN", "PAK", "SRI", "UAE"].map((code, index) => (
             <img
               key={code}
               src={`${s3BaseUrl}${code}.jpg`}

@@ -8,7 +8,7 @@ export function Header() {
         <div className="w-18 h-10 flex items-center justify-center">
           <div className="w-24 h-16 mb-2 overflow-hidden rounded-md">
             <img
-              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/ipl.jpg"
+              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/asia-cup-1.jpg"
               alt="ipl"
               width={96}
               height={64}
@@ -17,7 +17,7 @@ export function Header() {
           </div>
         </div>
         <div>
-          <h1 className="text-2xl font-bold">IPL Challenge</h1>
+          <h1 className="text-2xl font-bold">Asia Cup Challenge</h1>
           <p className="text-sm text-gray-600">Log in - Predict the winner - Earn points - Win vouchers</p>
         </div>
       </div>

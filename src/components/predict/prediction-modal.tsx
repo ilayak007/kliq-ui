@@ -24,7 +24,7 @@ export const SuccessModal = ({ clubName, onClose }: SuccessModalProps) => {
             />
 
         </div>
-        <p className="text-lg font-medium mb-6">Congrats !!! You have successfully submitted for <span className="font-bold">{clubName}</span> club.</p>
+        <p className="text-lg font-medium mb-6">Congrats !!! You have successfully submitted for <span className="font-bold">{clubName}</span> country.</p>
         <button
           onClick={onClose}
           className="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition"
