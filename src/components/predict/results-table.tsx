@@ -34,20 +34,17 @@ export function ResultsTable({ results }: ResultsTableProps) {
               </td>
               <td className="py-4">{result.customerSelected}</td>
               <td className="py-4">{result.result}</td>
-
-                      <td
-          className={`py-4 ${
-            result.pointsEarned.includes("Result")
-              ? "text-gray-500"
-              : result.pointsEarned.includes("lost")
-              ? "text-red-500"
-              : "text-green-500"
-          }`}
-        >
-          {result.pointsEarned}
-        </td>
-
-
+              <td
+                className={`py-4 ${
+                  result.pointsEarned.includes("Result")
+                    ? "text-gray-500"
+                    : result.pointsEarned.includes("lost")
+                    ? "text-red-500"
+                    : "text-green-500"
+                }`}
+              >
+                {result.pointsEarned}
+              </td>
             </tr>
           ))}
         </tbody>

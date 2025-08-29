@@ -38,6 +38,11 @@ interface ResultData {
   pointsEarned: string
 }
 
+interface DetailedSummaryResponse {
+  detailedSummary: ResultData[]
+  longestCorrectStreak: number
+}
+
 export default function FifaChallengePage() {
   const [showResults, setShowResults] = useState(false)
   const [date, setDate] = useState<string>("")
@@ -45,6 +50,7 @@ export default function FifaChallengePage() {
   const [pointsSummary, setPointsSummary] = useState<PointsSummaryData | null>(null)
   const [todaysMatches, setTodaysMatches] = useState<MatchData[] | null>(null)
   const [results, setResults] = useState<ResultData[] | null>(null)
+  const [longestCorrectStreak, setLongestCorrectStreak] = useState<number>(0)
 
   const [loadingPointsSummary, setLoadingPointsSummary] = useState(true)
   const [loadingTodaysMatches, setLoadingTodaysMatches] = useState(true)
@@ -166,7 +172,9 @@ export default function FifaChallengePage() {
         setLoadingResults(true)
         //const apiUrl = "http://localhost:3000"
         const response = await axios.get(`${apiUrl}/api/customers/${customerId}/detailed-summary`)
-        setResults(response.data)
+        const data: DetailedSummaryResponse = response.data
+        setResults(data.detailedSummary)
+        setLongestCorrectStreak(data.longestCorrectStreak)
         setErrorResults(null)
       } catch (error) {
         console.log("Error fetching results:", error)
@@ -249,9 +257,18 @@ export default function FifaChallengePage() {
           )}
         </div>
 
-        <div className="mt-12 flex items-center gap-2">
-          <h2 className="text-lg font-semibold">Result Summary</h2>
-          <Switch checked={showResults} onCheckedChange={setShowResults} />
+        <div className="mt-12">
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-semibold">Result Summary</h2>
+              <Switch checked={showResults} onCheckedChange={setShowResults} />
+            </div>
+            {showResults && longestCorrectStreak > 0 && (
+              <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full w-fit">
+                Longest winning streak: {longestCorrectStreak}
+              </span>
+            )}
+          </div>
         </div>
 
         {showResults && (
