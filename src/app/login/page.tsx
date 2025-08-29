@@ -286,6 +286,14 @@ export default function WorldCupChallengePage() {
               • Participation voucher also there. So why waiting. Let&apos;s
               Predict 🚀 🚀 🚀
             </li>
+            <li>
+            <img
+                key=""
+                src={`${s3BaseUrl}prizes.jpeg`}
+                className="w-100 h-150 sm:w-50 sm:h-70 rounded border object-cover"
+                alt=""
+              />
+            </li>
           </ul>
         </div>
       </div>
