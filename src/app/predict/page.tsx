@@ -7,6 +7,7 @@ import { ParticipationRules } from "@/components/predict/participation-rules"
 import { PointsSummary } from "@/components/predict/points-summary"
 import { MatchPrediction } from "@/components/predict/match-prediction"
 import { ResultsTable } from "@/components/predict/results-table"
+import {ResultsIconRows} from "@/components/predict/results-icon-rows"
 import { Switch } from "@/components/ui/switch"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
@@ -264,11 +265,15 @@ export default function FifaChallengePage() {
               <h2 className="text-lg font-semibold">Result Summary</h2>
               <Switch checked={showResults} onCheckedChange={setShowResults} />
             </div>
-            {showResults && longestCorrectStreak > 0 && (
-              <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full w-fit">
-                Longest winning streak: {longestCorrectStreak}
-              </span>
+            {showResults && longestCorrectStreak > 0 && results && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full w-fit">
+                  Longest winning streak: {longestCorrectStreak}
+                </span>
+                <ResultsIconRows results={results} />
+              </div>
             )}
+
           </div>
         </div>
 
