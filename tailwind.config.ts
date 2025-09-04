@@ -13,7 +13,17 @@ export default {
         foreground: "var(--foreground)",
         border: "#e5e7eb",
       },
+      keyframes: {
+        blinkOnce: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
+      },
+      animation: {
+        blinkOnce: "blinkOnce 1s ease-in-out 3",
+      },
     },
   },
   plugins: [],
 } satisfies Config;
+

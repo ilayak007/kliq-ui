@@ -230,6 +230,7 @@ export default function FifaChallengePage() {
             <PointsSummary data={pointsSummary} />
           ) : null}
         </div>
+        
 
         <div className="mt-8">
           <h2 className="text-lg font-semibold">Today&apos;s Game - {date}</h2>
@@ -253,7 +254,7 @@ export default function FifaChallengePage() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-4 text-red-600 font-medium">No more matches scheduled for today. Come Tomorrow !!!</div>
+            <div className="text-center py-4 text-red-600 font-medium">No matches left today. See you tomorrow!</div>
           )}
         </div>
 
