@@ -236,7 +236,7 @@ export default function FifaChallengePage() {
         <div className="mt-8">
           <h2 className="text-lg font-semibold">Today&apos;s Game - {date}</h2>
           {todaysMatches && todaysMatches.length > 0 && (
-          <p className="text-gray-400 mt-0.5">Predictions close 1 hour before the match starts.</p>
+          <p className="text-gray-400 mt-0.6">Predictions will close 1 hour before the match begins.</p>
           )}
           {loadingTodaysMatches ? (
             <div className="flex items-center justify-center min-h-[70vh]">
