@@ -255,8 +255,8 @@ export default function FifaChallengePage() {
               ))}
             </div>
           ) : (
-            // <div className="text-center py-4 text-red-600 font-medium">No matches left today. See you tomorrow!</div>
-            <div className="text-center py-4 text-red-600 font-large">Tournament kicks off on 9th Sep (Tue). Don’t miss it! </div>
+             <div className="text-center py-4 text-red-600 font-medium">No matches left today. See you tomorrow!</div>
+            //<div className="text-center py-4 text-red-600 font-large">Tournament kicks off on 9th Sep (Tue). Don’t miss it! </div>
           )}
         </div>
 
