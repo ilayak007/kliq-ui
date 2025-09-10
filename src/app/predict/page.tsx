@@ -234,8 +234,13 @@ export default function FifaChallengePage() {
         
 
         <div className="mt-8">
-          <h2 className="text-lg font-semibold">Today&apos;s Game - {date}</h2>
-          {todaysMatches && todaysMatches.length > 0 && (
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold">Today&apos;s Game - {date}</h2>
+              {/* <a href="/profile-message" className="text-blue-500 hover:underline">
+                TEST
+              </a> */}
+            </div>          
+        {todaysMatches && todaysMatches.length > 0 && (
           <p className="text-gray-400 mt-0.6">Predictions will close 1 hour before the match begins.</p>
           )}
           {loadingTodaysMatches ? (
@@ -271,7 +276,7 @@ export default function FifaChallengePage() {
                 <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full w-fit">
                   Longest winning streak: {longestCorrectStreak}
                 </span>
-                <ResultsIconRows results={results} />
+                {/* <ResultsIconRows results={results} /> */}
               </div>
             )}
 
