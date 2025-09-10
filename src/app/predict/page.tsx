@@ -7,7 +7,7 @@ import { ParticipationRules } from "@/components/predict/participation-rules"
 import { PointsSummary } from "@/components/predict/points-summary"
 import { MatchPrediction } from "@/components/predict/match-prediction"
 import { ResultsTable } from "@/components/predict/results-table"
-//import {ResultsIconRows} from "@/components/predict/results-icon-rows"
+import {ResultsIconRows} from "@/components/predict/results-icon-rows"
 import { Switch } from "@/components/ui/switch"
 import { Spinner } from "@/components/ui/spinner"
 import { useRouter } from "next/navigation"
@@ -276,7 +276,7 @@ export default function FifaChallengePage() {
                 <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full w-fit">
                   Longest winning streak: {longestCorrectStreak}
                 </span>
-                {/* <ResultsIconRows results={results} /> */}
+                <ResultsIconRows results={results} />
               </div>
             )}
 
