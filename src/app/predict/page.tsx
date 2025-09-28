@@ -5,7 +5,7 @@ import axios from "axios"
 import { Header } from "@/components/predict/header"
 import { ParticipationRules } from "@/components/predict/participation-rules"
 import { PointsSummary } from "@/components/predict/points-summary"
-import { MatchPrediction } from "@/components/predict/match-prediction"
+//import { MatchPrediction } from "@/components/predict/match-prediction"
 import { ResultsTable } from "@/components/predict/results-table"
 import {ResultsIconRows} from "@/components/predict/results-icon-rows"
 import { Switch } from "@/components/ui/switch"
@@ -189,26 +189,26 @@ export default function FifaChallengePage() {
   }, [showResults, customerId])
 
   // Prediction Submit
-  const handlePredictionSubmit = async (matchId: number, prediction: string) => {
-    try {
-      await axios.post(`${apiUrl}/api/predictions/`, {
-        matchId,
-        customerSelected: prediction,
-        customerId,
-        customerName,
-      })
+  // const handlePredictionSubmit = async (matchId: number, prediction: string) => {
+  //   try {
+  //     await axios.post(`${apiUrl}/api/predictions/`, {
+  //       matchId,
+  //       customerSelected: prediction,
+  //       customerId,
+  //       customerName,
+  //     })
 
-          // ✅ Show Success Modal with predicted team
-      setPredictedTeam(prediction)
-      setShowSuccessModal(true)
+  //         // ✅ Show Success Modal with predicted team
+  //     setPredictedTeam(prediction)
+  //     setShowSuccessModal(true)
 
-      // Re-fetch today's matches
-      const response = await axios.get(`${apiUrl}/api/matches/todays-matches?customerId=${customerId}`)
-      setTodaysMatches(response.data.data)
-    } catch (error) {
-      console.error("Error submitting prediction:", error)
-    }
-  }
+  //     // Re-fetch today's matches
+  //     const response = await axios.get(`${apiUrl}/api/matches/todays-matches?customerId=${customerId}`)
+  //     setTodaysMatches(response.data.data)
+  //   } catch (error) {
+  //     console.error("Error submitting prediction:", error)
+  //   }
+  // }
 
   return (
     <div className="min-h-screen bg-white text-black">
