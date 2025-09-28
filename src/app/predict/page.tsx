@@ -248,19 +248,27 @@ export default function FifaChallengePage() {
               <Spinner size={40} text="Loading todays matches..." />
             </div>
           ) : errorTodaysMatches && !todaysMatches ? (
-            <div className="text-center py-4 text-red-500">{errorTodaysMatches}</div>
-          ) : todaysMatches && todaysMatches.length > 0 ? (
-            <div className="space-y-4 mt-4">
-              {todaysMatches.map((match) => (
-                <MatchPrediction
-                  key={match.matchId}
-                  match={match}
-                  onSubmit={(prediction) => handlePredictionSubmit(match.matchId, prediction)}
-                />
-              ))}
-            </div>
+          //   <div className="text-center py-4 text-red-500">{errorTodaysMatches}</div>
+          // ) : todaysMatches && todaysMatches.length > 0 ? (
+          //   <div className="space-y-4 mt-4">
+          //     {todaysMatches.map((match) => (
+          //       <MatchPrediction
+          //         key={match.matchId}
+          //         match={match}
+          //         onSubmit={(prediction) => handlePredictionSubmit(match.matchId, prediction)}
+          //       />
+          //     ))}
+          //   </div>
+          <div className="text-center py-4 text-red-600 font-medium">Deeply saddened by the tragic incident at Karur which claimed the lives of 39 innocent people. 
+          Our heartfelt condolences go out to the families and loved ones affected. 
+          May the departed souls rest in peace, and may strength and healing surround those who are grieving this unimaginable loss.</div>
           ) : (
-             <div className="text-center py-4 text-red-600 font-medium">No matches left today. See you tomorrow!</div>
+            //  <div className="text-center py-4 text-red-600 font-medium">No matches left today. See you tomorrow!</div>
+
+             <div className="text-center py-4 text-red-600 font-medium">Deeply saddened by the tragic incident at Karur which claimed the lives of 39 innocent people. 
+             Our heartfelt condolences go out to the families and loved ones affected. 
+             May the departed souls rest in peace, and may strength and healing surround those who are grieving this unimaginable loss.</div>
+             
             //<div className="text-center py-4 text-red-600 font-large">Tournament kicks off on 9th Sep (Tue). Don’t miss it! </div>
           )}
         </div>

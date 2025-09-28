@@ -18,17 +18,17 @@ const s3BaseUrl = "https://kliq-demo-images.s3.eu-north-1.amazonaws.com/";
 // Function to determine background color based on rank
 const getBackgroundColor = (rank: number): string => {
   switch (rank) {
-    case 1: return "from-blue-100 to-blue-100";
-    case 2: return "from-amber-100 to-amber-100";
-    case 3: return "from-purple-100 to-pink-100";
-    case 4: return "from-teal-100 to-teal-100";
-    case 5: return "from-pink-100 to-pink-100";
-    case 6: return "from-green-100 to-green-100";
-    case 7: return "from-yellow-100 to-yellow-100";
-    case 8: return "from-orange-100 to-orange-100";
-    case 9: return "from-lime-100 to-lime-100";
-    case 10: return "from-cyan-100 to-cyan-100";
-    default: return "from-gray-100 to-gray-100";
+    // case 1: return "from-blue-100 to-blue-100";
+    // case 2: return "from-amber-100 to-amber-100";
+    // case 3: return "from-purple-100 to-pink-100";
+    // case 4: return "from-teal-100 to-teal-100";
+    // case 5: return "from-pink-100 to-pink-100";
+    // case 6: return "from-green-100 to-green-100";
+    // case 7: return "from-yellow-100 to-yellow-100";
+    // case 8: return "from-orange-100 to-orange-100";
+    // case 9: return "from-lime-100 to-lime-100";
+    // case 10: return "from-cyan-100 to-cyan-100";
+    default: return "from-gray-500 to-gray-500";
   }
 };
 
