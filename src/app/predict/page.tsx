@@ -235,7 +235,7 @@ export default function FifaChallengePage() {
 
         <div className="mt-8">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Today&apos;s Game - {date}</h2>
+              {/* <h2 className="text-lg font-semibold">Today&apos;s Game - {date}</h2> */}
               {/* <a href="/profile-message" className="text-blue-500 hover:underline">
                 TEST
               </a> */}
@@ -260,12 +260,10 @@ export default function FifaChallengePage() {
               ))}
             </div>
           ) : (
-            //  <div className="text-center py-4 text-red-600 font-medium">No matches left today. See you tomorrow!</div>
-
-             <div className="text-center py-4 text-red-600 font-medium">Deeply saddened by the tragic incident at Karur which claimed the lives of 39 innocent people. 
-             Our heartfelt condolences go out to the families and loved ones affected. 
-             May the departed souls rest in peace, and may strength and healing surround those who are grieving this unimaginable loss.</div>
-             
+             <div className="text-center py-4 text-blue-600 font-medium">
+              
+              <h2 className="text-lg font-bold mb-4">Congratulations to Team India on their triumphant victory at the 2025 Asia Cup !</h2>
+              </div>
             //<div className="text-center py-4 text-red-600 font-large">Tournament kicks off on 9th Sep (Tue). Don’t miss it! </div>
           )}
         </div>
