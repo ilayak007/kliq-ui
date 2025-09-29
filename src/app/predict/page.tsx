@@ -235,7 +235,7 @@ export default function FifaChallengePage() {
 
         <div className="mt-8">
             <div className="flex items-center justify-between">
-              {/* <h2 className="text-lg font-semibold">Today&apos;s Game - {date}</h2> */}
+              <h2 className="text-lg font-semibold">{date}</h2>
               {/* <a href="/profile-message" className="text-blue-500 hover:underline">
                 TEST
               </a> */}
