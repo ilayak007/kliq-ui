@@ -127,13 +127,13 @@ export default function TournamentsPage() {
       {/* Top Bar with Create Button, Toggle, and Dropdown */}
       <div className="flex flex-col md:flex-row md:justify-between items-center mb-6 gap-4">
         {/* Create Tournament Button (Future Feature) */}
-        <button
+        {/* <button
           onClick={handleCreateNewTournament}
           className="hidden md:block px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition opacity-50 cursor-not-allowed"
           disabled
         >
           Create Tournament (Coming Soon)
-        </button>
+        </button> */}
 
         {/* Status Toggle */}
         <div className="flex w-full md:w-auto bg-gray-800 p-1 rounded-full">
@@ -259,7 +259,7 @@ export default function TournamentsPage() {
       )}
       
       {/* Sticky button for mobile view (disabled for now) */}
-      <div className="md:hidden fixed bottom-4 left-0 right-0 px-4">
+      {/* <div className="md:hidden fixed bottom-4 left-0 right-0 px-4">
         <button
           onClick={handleCreateNewTournament}
           className="w-full px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg shadow-lg opacity-50 cursor-not-allowed"
@@ -267,7 +267,7 @@ export default function TournamentsPage() {
         >
           Create Tournament (Coming Soon)
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
