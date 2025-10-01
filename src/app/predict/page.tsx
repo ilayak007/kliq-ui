@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import axios from "axios"
 import { Header } from "@/components/predict/header"
 import { ParticipationRules } from "@/components/predict/participation-rules"
@@ -47,7 +47,7 @@ interface DetailedSummaryResponse {
   longestCorrectStreak: number
 }
 
-export default function FifaChallengePage() {
+function PredictPageContent() {
   const [showResults, setShowResults] = useState(false)
   const [date, setDate] = useState<string>("")
   const [tournamentId, setTournamentId] = useState<string | null>(null)
@@ -362,4 +362,16 @@ export default function FifaChallengePage() {
 
     </div>
   )
+}
+
+export default function FifaChallengePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-white text-black">
+        <Spinner />
+      </div>
+    }>
+      <PredictPageContent />
+    </Suspense>
+  );
 }
