@@ -248,7 +248,7 @@ function PredictPageContent() {
 
   return (
     <div className="min-h-screen bg-white text-black">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-4 sm:py-8">
         <Header tournamentName={tournamentName} tournamentId={tournamentId || undefined} tournamentDescription={tournamentDescription} />
 
         {/* Back to Tournaments Button */}

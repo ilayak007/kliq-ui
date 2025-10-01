@@ -18,10 +18,10 @@ import { Tournament, TournamentStatus, getTournamentStatus, formatDateRange } fr
 /**
  * Redirects the user to the tournament creation page (future feature).
  */
-const handleCreateNewTournament = () => {
-  // Future implementation for tournament creation
-  console.log("Create tournament feature coming soon!");
-};
+// const handleCreateNewTournament = () => {
+//   // Future implementation for tournament creation
+//   console.log("Create tournament feature coming soon!");
+// };
 
 export default function TournamentsPage() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
