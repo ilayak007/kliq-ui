@@ -30,7 +30,7 @@ export default function WorldCupChallengePage() {
     const customerId = localStorage.getItem("customerId")
 
     if (authToken && customerId) {
-      router.push("/predict")
+      router.push("/tournaments")
     }
   }, [router])
 
@@ -100,7 +100,7 @@ export default function WorldCupChallengePage() {
       localStorage.setItem("customerId", customerId.toString())
       localStorage.setItem("customerName", customerName)
 
-      router.push("/predict")
+      router.push("/tournaments")
     } catch (err: unknown) {
       console.error("Login failed:", err)
       if (axios.isAxiosError(err)) {

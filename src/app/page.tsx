@@ -45,7 +45,7 @@ export default function Home() {
 
   // Perform redirection after the component is mounted
   useEffect(() => {
-    redirect("/login"); // Redirect to /predict
+    redirect("/login"); // Redirect to login page
   }, []);
 
   /**

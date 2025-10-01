@@ -1,0 +1,273 @@
+/**
+ * @file TournamentsPage.tsx
+ * @description Tournament Selection Dashboard - Displays a list of tournaments with filtering options (Past/Ongoing/Upcoming).
+ * @author Ilayaraja Kasirajan
+ * @created [02-Oct-2025]
+ */
+
+"use client";
+
+import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
+import axios from "axios";
+import { Loader2, ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Tournament, TournamentStatus, getTournamentStatus, formatDateRange } from "@/types/tournament";
+
+/**
+ * Redirects the user to the tournament creation page (future feature).
+ */
+const handleCreateNewTournament = () => {
+  // Future implementation for tournament creation
+  console.log("Create tournament feature coming soon!");
+};
+
+export default function TournamentsPage() {
+  const [tournaments, setTournaments] = useState<Tournament[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [showStatus, setShowStatus] = useState<TournamentStatus>(TournamentStatus.ONGOING);
+  const [selectedSport, setSelectedSport] = useState<string | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter();
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Fetch tournaments from the backend on component mount.
+   */
+  useEffect(() => {
+    const fetchTournaments = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+        const response = await axios.get(`${apiUrl}/api/tournaments`);
+        setTournaments(response.data.data || []);
+      } catch (err) {
+        setError("Failed to load tournaments");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTournaments();
+  }, []);
+
+  /**
+   * Handle clicks outside the dropdown to close it.
+   */
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  /**
+   * Handle tournament card click to navigate to predict page.
+   */
+  const handleTournamentClick = (tournamentId: string) => {
+    router.push(`/predict?tournamentId=${tournamentId}`);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+        <Loader2 className="animate-spin h-10 w-10 text-gray-400" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-10">{error}</div>;
+  }
+
+  /**
+   * Filter tournaments based on status and selected sport.
+   */
+  const filteredTournaments = tournaments.filter((tournament) => {
+    const tournamentStatus = getTournamentStatus(tournament);
+    const statusMatch = tournamentStatus === showStatus;
+    const sportMatch = !selectedSport || tournament.sport === selectedSport;
+    return statusMatch && sportMatch;
+  });
+
+  const sports = Array.from(new Set(tournaments.map((t) => t.sport))).sort();
+
+  /**
+   * Handle logo click to reload the page.
+   */
+  const handleImageClick = () => {
+    window.location.reload();
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white p-4 sm:p-8">
+      {/* Header Section */}
+      <div className="flex flex-wrap justify-between items-center mb-6">
+        <h1 className="text-2xl sm:text-4xl font-bold">Tournament Summary</h1>
+  
+        {/* Kliq Logo with reload on click */}
+        {/* <a href="" onClick={handleImageClick} className="justify-self-end">
+          <Image
+            src="https://cdn.prod.website-files.com/66ab3fc8f9140f3bdf6a36a5/66ab3fc8f9140f3bdf6a36fd_kliq-logo.svg"
+            alt="Kliq Logo"
+            width={80}
+            height={20}
+            className="hover:scale-110 transition-transform duration-300"
+          />
+        </a> */}
+      </div>
+  
+      {/* Top Bar with Create Button, Toggle, and Dropdown */}
+      <div className="flex flex-col md:flex-row md:justify-between items-center mb-6 gap-4">
+        {/* Create Tournament Button (Future Feature) */}
+        <button
+          onClick={handleCreateNewTournament}
+          className="hidden md:block px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition opacity-50 cursor-not-allowed"
+          disabled
+        >
+          Create Tournament (Coming Soon)
+        </button>
+
+        {/* Status Toggle */}
+        <div className="flex w-full md:w-auto bg-gray-800 p-1 rounded-full">
+          <button
+            onClick={() => setShowStatus(TournamentStatus.ONGOING)}
+            disabled={selectedSport !== null}
+            className={`flex-1 md:flex-none px-4 py-2 text-sm font-semibold rounded-full transition-all ${
+              showStatus === TournamentStatus.ONGOING ? "bg-emerald-500 text-black" : "text-gray-400"
+            } ${selectedSport ? "opacity-50 cursor-not-allowed" : ""}`}
+          >
+            Ongoing
+          </button>
+          <button
+            onClick={() => setShowStatus(TournamentStatus.UPCOMING)}
+            disabled={selectedSport !== null}
+            className={`flex-1 md:flex-none px-4 py-2 text-sm font-semibold rounded-full transition-all ${
+              showStatus === TournamentStatus.UPCOMING ? "bg-blue-500 text-black" : "text-gray-400"
+            } ${selectedSport ? "opacity-50 cursor-not-allowed" : ""}`}
+          >
+            Upcoming
+          </button>
+          <button
+            onClick={() => setShowStatus(TournamentStatus.PAST)}
+            disabled={selectedSport !== null}
+            className={`flex-1 md:flex-none px-4 py-2 text-sm font-semibold rounded-full transition-all ${
+              showStatus === TournamentStatus.PAST ? "bg-gray-500 text-black" : "text-gray-400"
+            } ${selectedSport ? "opacity-50 cursor-not-allowed" : ""}`}
+          >
+            Past
+          </button>
+        </div>
+  
+        {/* Sport Filter Dropdown */}
+        <div className="relative z-50 ml-auto" ref={dropdownRef}>
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="flex items-center px-4 py-2 bg-gray-800 rounded-full text-white hover:bg-gray-700"
+          >
+            <span>{selectedSport || "All Sports"}</span>
+            <ChevronDown className="ml-2 h-4 w-4" />
+          </button>
+
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-gray-700 shadow-lg rounded-lg overflow-hidden border border-gray-600 z-50">
+              <ul className="max-h-60 overflow-auto">
+                {/* Option to reset filter */}
+                <li
+                  onClick={() => {
+                    setSelectedSport(null);
+                    setDropdownOpen(false);
+                  }}
+                  className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600"
+                >
+                  <span>All Sports</span>
+                </li>
+                {/* List of unique sports */}
+                {sports.map((sport) => (
+                  <li
+                    key={sport}
+                    onClick={() => {
+                      setSelectedSport(sport);
+                      setDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 text-sm text-white cursor-pointer hover:bg-gray-600"
+                  >
+                    <span>{sport}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+  
+      {/* Tournament Grid */}
+      {filteredTournaments.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-gray-400 text-lg mb-4">No tournaments happening at this moment.</p>
+          <p className="text-gray-500 text-sm">Check back later for new tournaments!</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredTournaments.map((tournament) => (
+            <div 
+              key={tournament.tournamentId} 
+              onClick={() => handleTournamentClick(tournament.tournamentId)}
+              className="group block cursor-pointer"
+            >
+              <div className="bg-gray-900 p-4 rounded-lg transition-all group-hover:scale-105 relative">
+                <Image
+                  src={`https://kliq-demo-images.s3.eu-north-1.amazonaws.com/${tournament.tournamentId}.jpg`}
+                  alt={tournament.tournamentName}
+                  width={300}
+                  height={200}
+                  className="w-full h-40 object-cover rounded-md"
+                  onError={(e) => {
+                    // Fallback to placeholder if S3 image doesn't exist
+                    e.currentTarget.src = "/placeholder.jpg";
+                  }}
+                />
+                <h3 className="mt-3 text-lg font-semibold">{tournament.tournamentName}</h3>
+                <p className="text-sm text-gray-400">{tournament.description || "Tournament description"}</p>
+                <div className="flex justify-between items-center mt-2">
+                  <span
+                    className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
+                      getTournamentStatus(tournament) === TournamentStatus.ONGOING 
+                        ? "bg-emerald-900/50 text-emerald-400"
+                        : getTournamentStatus(tournament) === TournamentStatus.UPCOMING
+                        ? "bg-blue-900/50 text-blue-400"
+                        : "bg-gray-900/50 text-gray-400"
+                    }`}
+                  >
+                    {tournament.sport}
+                  </span>
+                  <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-white/10 text-white">
+                    {formatDateRange(tournament.startDate, tournament.endDate)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      
+      {/* Sticky button for mobile view (disabled for now) */}
+      <div className="md:hidden fixed bottom-4 left-0 right-0 px-4">
+        <button
+          onClick={handleCreateNewTournament}
+          className="w-full px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-lg shadow-lg opacity-50 cursor-not-allowed"
+          disabled
+        >
+          Create Tournament (Coming Soon)
+        </button>
+      </div>
+    </div>
+  );
+}

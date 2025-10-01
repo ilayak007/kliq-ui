@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-export function Header() {
+interface HeaderProps {
+  tournamentName?: string;
+  tournamentId?: string;
+  tournamentDescription?: string;
+}
+
+export function Header({ tournamentName = "Tournament Challenge", tournamentId , tournamentDescription ="test" }: HeaderProps) {
   return (
     <div className="flex items-center justify-between gap-4 px-4 py-2 flex-wrap">
       {/* IPL Challenge Section */}
@@ -8,8 +14,8 @@ export function Header() {
         <div className="w-18 h-10 flex items-center justify-center">
           <div className="w-24 h-16 mb-2 overflow-hidden rounded-md">
             <img
-              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/asia-cup-1.jpg"
-              alt="ipl"
+              src={tournamentId ? `https://kliq-demo-images.s3.eu-north-1.amazonaws.com/${tournamentId}.jpg` : "https://kliq-demo-images.s3.eu-north-1.amazonaws.com/asia-cup-1.jpg"}
+              alt={tournamentName}
               width={96}
               height={64}
               className="object-cover w-full h-full"
@@ -17,8 +23,8 @@ export function Header() {
           </div>
         </div>
         <div>
-          <h1 className="text-2xl font-bold">Asia Cup Challenge</h1>
-          <p className="text-sm text-gray-600">Log in - Predict the winner - Earn points - Win vouchers</p>
+          <h1 className="text-2xl font-bold">{tournamentName}</h1>
+          <p className="text-sm text-gray-600">{tournamentDescription}</p>
         </div>
       </div>
 

@@ -10,8 +10,10 @@ import { ResultsTable } from "@/components/predict/results-table"
 import {ResultsIconRows} from "@/components/predict/results-icon-rows"
 import { Switch } from "@/components/ui/switch"
 import { Spinner } from "@/components/ui/spinner"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { SuccessModal } from "@/components/predict/prediction-modal"
+import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
 
 // Types for API responses
 interface PointsSummaryData {
@@ -47,6 +49,9 @@ interface DetailedSummaryResponse {
 export default function FifaChallengePage() {
   const [showResults, setShowResults] = useState(false)
   const [date, setDate] = useState<string>("")
+  const [tournamentId, setTournamentId] = useState<string | null>(null)
+  const [tournamentName, setTournamentName] = useState<string>("")
+  const [tournamentDescription, setTournamentDescription] = useState<string>("")
 
   const [pointsSummary, setPointsSummary] = useState<PointsSummaryData | null>(null)
   const [todaysMatches, setTodaysMatches] = useState<MatchData[] | null>(null)
@@ -69,6 +74,7 @@ export default function FifaChallengePage() {
     const [predictedTeam, setPredictedTeam] = useState<string>("")
 
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
     const token = localStorage.getItem("authToken")
@@ -76,6 +82,35 @@ export default function FifaChallengePage() {
       router.push("/login")
     }
   }, [])
+
+  // Handle tournamentId from URL parameters
+  useEffect(() => {
+    const tournamentIdParam = searchParams.get("tournamentId")
+    if (tournamentIdParam) {
+      setTournamentId(tournamentIdParam)
+      // Fetch tournament name
+      fetchTournamentName(tournamentIdParam)
+    } else {
+      // If no tournamentId, redirect to tournaments page
+      router.push("/tournaments")
+    }
+  }, [searchParams, router])
+
+  // Fetch tournament name
+  const fetchTournamentName = async (id: string) => {
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
+      const response = await axios.get(`${apiUrl}/api/tournaments`)
+      const tournaments = response.data.data || []
+      const tournament = tournaments.find((t: any) => t.tournamentId === id)
+      if (tournament) {
+        setTournamentName(tournament.tournamentName)
+        setTournamentDescription(tournament.description || "Log in - Predict the winner - Earn points - Win vouchers")
+      }
+    } catch (error) {
+      console.error("Error fetching tournament name:", error)
+    }
+  }
 
 //   const verifyToken = async () => {
 //     try {
@@ -123,12 +158,12 @@ export default function FifaChallengePage() {
 
   // Fetch points summary with guard
   useEffect(() => {
-    if (!customerId) return; // ✅ Guard added
+    if (!customerId || !tournamentId) return; // ✅ Guard added
 
     const fetchPointsSummary = async () => {
       try {
         setLoadingPointsSummary(true)
-        const response = await axios.get(`${apiUrl}/api/customer/points-summary?customerId=${customerId}`)
+        const response = await axios.get(`${apiUrl}/api/customer/points-summary?customerId=${customerId}&tournamentId=${tournamentId}`)
         setPointsSummary(response.data.data)
         setErrorPointsSummary(null)
       } catch (error) {
@@ -140,17 +175,17 @@ export default function FifaChallengePage() {
     }
 
     fetchPointsSummary()
-  }, [customerId])
+  }, [customerId, tournamentId])
 
   // Fetch today's matches with guard
   useEffect(() => {
-    if (!customerId) return; // ✅ Guard added
+    if (!customerId || !tournamentId) return; // ✅ Guard added
 
     const fetchTodaysMatches = async () => {
       try {
         setLoadingTodaysMatches(true)
         //const apiUrl = "http://localhost:3000"
-        const response = await axios.get(`${apiUrl}/api/matches/todays-matches?customerId=${customerId}`)
+        const response = await axios.get(`${apiUrl}/api/matches/todays-matches?customerId=${customerId}&tournamentId=${tournamentId}`)
         setTodaysMatches(response.data.data)
         setErrorTodaysMatches(null)
       } catch (error) {
@@ -162,17 +197,17 @@ export default function FifaChallengePage() {
     }
 
     fetchTodaysMatches()
-  }, [customerId])
+  }, [customerId, tournamentId])
 
   // Fetch results when showResults toggled ON and customerId is present
   useEffect(() => {
-    if (!showResults || !customerId) return; // ✅ Guard added
+    if (!showResults || !customerId || !tournamentId) return; // ✅ Guard added
 
     const fetchResults = async () => {
       try {
         setLoadingResults(true)
         //const apiUrl = "http://localhost:3000"
-        const response = await axios.get(`${apiUrl}/api/customers/${customerId}/detailed-summary`)
+        const response = await axios.get(`${apiUrl}/api/customers/${customerId}/detailed-summary/${tournamentId}`)
         const data: DetailedSummaryResponse = response.data
         setResults(data.detailedSummary)
         setLongestCorrectStreak(data.longestCorrectStreak)
@@ -186,7 +221,7 @@ export default function FifaChallengePage() {
     }
 
     fetchResults()
-  }, [showResults, customerId])
+  }, [showResults, customerId, tournamentId])
 
   // Prediction Submit
   const handlePredictionSubmit = async (matchId: number, prediction: string) => {
@@ -213,7 +248,23 @@ export default function FifaChallengePage() {
   return (
     <div className="min-h-screen bg-white text-black">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <Header />
+        <Header tournamentName={tournamentName} tournamentId={tournamentId} tournamentDescription={tournamentDescription} />
+
+        {/* Back to Tournaments Button */}
+        <div className="mt-4 mb-6">
+          <Link 
+            href="/tournaments" 
+            className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Tournaments
+          </Link>
+          {tournamentName && (
+            <h1 className="text-2xl font-bold mt-2 text-gray-800">
+              
+            </h1>
+          )}
+        </div>
 
         <div className="mt-8">
           <ParticipationRules />
@@ -262,7 +313,7 @@ export default function FifaChallengePage() {
           ) : (
              <div className="text-center py-4 text-blue-600 font-medium">
               
-              <h2 className="text-lg font-bold mb-4">Congratulations to Team India on their triumphant victory at the 2025 Asia Cup !</h2>
+              <h2 className="text-lg font-bold mb-4">Looking for sponsors to back this tournament – interested?</h2>
               </div>
             //<div className="text-center py-4 text-red-600 font-large">Tournament kicks off on 9th Sep (Tue). Don’t miss it! </div>
           )}
