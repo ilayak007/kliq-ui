@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { SuccessModal } from "@/components/predict/prediction-modal"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { Tournament } from "@/types/tournament"
 
 // Types for API responses
 interface PointsSummaryData {
@@ -102,7 +103,7 @@ export default function FifaChallengePage() {
       const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
       const response = await axios.get(`${apiUrl}/api/tournaments`)
       const tournaments = response.data.data || []
-      const tournament = tournaments.find((t: any) => t.tournamentId === id)
+      const tournament = tournaments.find((t: Tournament) => t.tournamentId === id)
       if (tournament) {
         setTournamentName(tournament.tournamentName)
         setTournamentDescription(tournament.description || "Log in - Predict the winner - Earn points - Win vouchers")
@@ -248,7 +249,7 @@ export default function FifaChallengePage() {
   return (
     <div className="min-h-screen bg-white text-black">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <Header tournamentName={tournamentName} tournamentId={tournamentId} tournamentDescription={tournamentDescription} />
+        <Header tournamentName={tournamentName} tournamentId={tournamentId || undefined} tournamentDescription={tournamentDescription} />
 
         {/* Back to Tournaments Button */}
         <div className="mt-4 mb-6">

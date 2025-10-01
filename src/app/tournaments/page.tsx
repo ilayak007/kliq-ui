@@ -8,7 +8,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import Link from "next/link";
+//import Link from "next/link";
 import axios from "axios";
 import { Loader2, ChevronDown } from "lucide-react";
 import Image from "next/image";
@@ -102,9 +102,9 @@ export default function TournamentsPage() {
   /**
    * Handle logo click to reload the page.
    */
-  const handleImageClick = () => {
-    window.location.reload();
-  };
+  // const handleImageClick = () => {
+  //   window.location.reload();
+  // };
 
   return (
     <div className="min-h-screen bg-black text-white p-4 sm:p-8">
