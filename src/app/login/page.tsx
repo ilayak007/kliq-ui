@@ -36,7 +36,7 @@ export default function WorldCupChallengePage() {
 
   // Countdown timer logic
   useEffect(() => {
-    const targetDate = new Date("2025-09-09T19:30:00+05:30") // 9th Sep 2026 7:30 PM IST
+    const targetDate = new Date("2026-02-07T11:00:00+05:30") // 9th Sep 2026 7:30 PM IST
 
     const interval = setInterval(() => {
       const now = new Date()
@@ -119,7 +119,7 @@ export default function WorldCupChallengePage() {
       <div className="w-full flex flex-col md:flex-row items-center justify-between mb-6">
         <div className="text-center md:text-left mb-4 md:mb-0">
           <h1 className="text-3xl md:text-4xl font-bold text-[#8B1538]">
-            Asia Cup Challenge !!!
+          ICC Men's T20 World Cup Challenge !!!
           </h1>
           <p className="text-gray-800 mt-1">
             Log in - Predict the winner - Earn points - Win vouchers
@@ -156,7 +156,7 @@ export default function WorldCupChallengePage() {
         <div className="w-[30%] h-full flex">
           <div className="w-1/2 h-full relative">
             <Image
-              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/salman-pak.jpg"
+              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/Marsh.jpg"
               alt="Kohli"
               fill
               className="object-cover"
@@ -175,7 +175,7 @@ export default function WorldCupChallengePage() {
         <div className="w-[40%] h-full bg-[#8B1538] flex items-center justify-center">
           <div className="relative w-[95%] h-full mx-auto">
             <Image
-              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/asia-cup.jpg"
+              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/t20-world-cup.jpg"
               alt="Asia Cup"
               fill
               className="object-cover rounded"
@@ -186,7 +186,7 @@ export default function WorldCupChallengePage() {
         <div className="w-[30%] h-full flex">
           <div className="w-1/2 h-full relative">
             <Image
-              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/mendis.jpg"
+              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/harry.jpg"
               alt="Dhoni"
               fill
               className="object-cover"
@@ -194,7 +194,7 @@ export default function WorldCupChallengePage() {
           </div>
           <div className="w-1/2 h-full relative">
             <Image
-              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/Litton.jpg"
+              src="https://kliq-demo-images.s3.eu-north-1.amazonaws.com/Markram.jpg"
               alt="Cummins"
               fill
               className="object-cover"
@@ -274,7 +274,7 @@ export default function WorldCupChallengePage() {
 
         {/* How to participate */}
         <div>
-          <h2 className="text-l font-low mb-3 text-white bg-[#8B1538] p-2 rounded">
+          {/* <h2 className="text-l font-low mb-3 text-white bg-[#8B1538] p-2 rounded">
             How to participate?
           </h2>
           <ul className="space-y-1.5">
@@ -286,22 +286,23 @@ export default function WorldCupChallengePage() {
               • Participation voucher also there. So why waiting. Let&apos;s
               Predict 🚀 🚀 🚀
             </li>
-            <li>
+            <li> */}
             <img
                 key=""
-                src={`${s3BaseUrl}prizes.jpeg`}
+                src={`${s3BaseUrl}T20_WC_2026_flyer.png`}
                 className="w-100 h-150 sm:w-50 sm:h-70 rounded border object-cover"
                 alt=""
               />
-            </li>
-          </ul>
+            {/* </li>
+          </ul> */}
         </div>
       </div>
 
       {/* Flags */}
       <div className="w-full mb-6">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-10 gap-x-6 justify-items-center">
-          {["AFG", "BAN", "HKG", "IND", "OMN", "PAK", "SRI", "UAE"].map(
+          {["AFG", "AUS", "CAN", "ENG", "IND", "IRE", "ITA", "NAM", "NEP", "NED", "NZL", "OMN", "PAK", "SCO", "RSA", "SRI", "USA", "UAE", "WI", "ZIM"]
+.map(
             (code, index) => (
               <img
                 key={code}

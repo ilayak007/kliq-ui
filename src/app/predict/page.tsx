@@ -293,7 +293,8 @@ function PredictPageContent() {
               </a> */}
             </div>          
         {todaysMatches && todaysMatches.length > 0 && (
-          <p className="text-gray-400 mt-0.6">Predictions will close 1 hour before the match begins.</p>
+          // <p className="text-gray-400 mt-0.6">Predictions will close 1 hour before the match begins.</p>          
+          <p className="text-red-800 mt-5.9">TESTING GOING ON...</p>
           )}
           {loadingTodaysMatches ? (
             <div className="flex items-center justify-center min-h-[70vh]">
@@ -312,11 +313,11 @@ function PredictPageContent() {
               ))}
             </div>
           ) : (
-             <div className="text-center py-4 text-blue-600 font-medium">
+            //  <div className="text-center py-4 text-blue-600 font-medium">
               
-              <h2 className="text-lg font-bold mb-4">Looking for sponsors to back this tournament – interested?</h2>
-              </div>
-            //<div className="text-center py-4 text-red-600 font-large">Tournament kicks off on 9th Sep (Tue). Don’t miss it! </div>
+            //   <h2 className="text-lg font-bold mb-4">Looking for sponsors to back this tournament – interested?</h2>
+            //   </div>
+            <div className="text-center py-4 text-red-600 font-large">Tournament kicks off on 7th Feb (Sat). Don’t miss it! </div>
           )}
         </div>
 
