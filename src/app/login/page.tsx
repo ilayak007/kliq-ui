@@ -119,7 +119,7 @@ export default function WorldCupChallengePage() {
       <div className="w-full flex flex-col md:flex-row items-center justify-between mb-6">
         <div className="text-center md:text-left mb-4 md:mb-0">
           <h1 className="text-3xl md:text-4xl font-bold text-[#8B1538]">
-          ICC Men&aposs T20 World Cup Challenge !!!
+          ICC Men&apos;s T20 World Cup Challenge !!!
           </h1>
           <p className="text-gray-800 mt-1">
             Log in - Predict the winner - Earn points - Win vouchers
