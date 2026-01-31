@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect, Suspense } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { CustomerRanking } from "@/components/customer-ranking/customer-ranking"
 import { Spinner } from "@/components/ui/spinner"
 import axios from "axios"
@@ -17,27 +17,31 @@ interface CustomerData {
   totalLost: number
 }
 
-export default function CustomerRankingPage() {
+function CustomerRankingPageContent() {
   const [customers, setCustomers] = useState<CustomerData[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [highlightedCustomerId, setHighlightedCustomerId] = useState<number | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const tournamentId = searchParams.get("tournamentId")
 
   useEffect(() => {
     const token = localStorage.getItem("authToken")
     if (!token) {
       router.push("/login")
     }
-  }, [])
+  }, [router])
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
         setLoading(true)
-        //const apiUrl = "http://localhost:3000"
         const apiUrl = process.env.NEXT_PUBLIC_KLIQ_BACKEND_API_URL;
-        const response = await axios.get(`${apiUrl}/api/customers/dashboard`)
+        const url = tournamentId 
+          ? `${apiUrl}/api/customers/dashboard?tournamentId=${tournamentId}`
+          : `${apiUrl}/api/customers/dashboard`;
+        const response = await axios.get(url)
         setCustomers(response.data.data)
         setError(null)
       } catch (err) {
@@ -49,10 +53,13 @@ export default function CustomerRankingPage() {
     }
 
     fetchCustomers()
-  }, [])
+  }, [tournamentId])
 
   const handleDashboardClick = () => {
-    router.push("/predict")
+    const url = tournamentId 
+      ? `/predict?tournamentId=${tournamentId}`
+      : "/predict";
+    router.push(url)
   }
 
   const handleFindMeClick = () => {
@@ -105,4 +112,16 @@ export default function CustomerRankingPage() {
       <CustomerRanking customers={customers} highlightedCustomerId={highlightedCustomerId} />
     </div>
   )
+}
+
+export default function CustomerRankingPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-[70vh]">
+        <Spinner size={40} text="Loading Rankings" />
+      </div>
+    }>
+      <CustomerRankingPageContent />
+    </Suspense>
+  );
 }

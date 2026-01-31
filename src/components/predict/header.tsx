@@ -38,7 +38,7 @@ export function Header({ tournamentName = "Tournament Challenge", tournamentId ,
         </Link>
 
         {/* Check Rankings */}
-        <Link href="/customer-ranking" className="flex-1 lg:flex-none">
+        <Link href={tournamentId ? `/customer-ranking?tournamentId=${tournamentId}` : "/customer-ranking"} className="flex-1 lg:flex-none">
           <div className="bg-purple-300 p-2 sm:p-3 rounded-lg flex items-center justify-center cursor-pointer hover:bg-purple-400 transition-all">
             <span className="text-xs sm:text-sm text-black font-medium">Check Rankings</span>
           </div>

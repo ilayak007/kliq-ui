@@ -280,7 +280,7 @@ function PredictPageContent() {
           ) : errorPointsSummary && !pointsSummary ? (
             <div className="text-center py-4 text-red-500">{errorPointsSummary}</div>
           ) : pointsSummary ? (
-            <PointsSummary data={pointsSummary} />
+            <PointsSummary data={pointsSummary} tournamentId={tournamentId} />
           ) : null}
         </div>
         
