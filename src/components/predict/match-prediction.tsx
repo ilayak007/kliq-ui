@@ -40,7 +40,7 @@ export function MatchPrediction({ match, onSubmit }: MatchProps) {
   const teamBImageUrl = `${s3BaseUrl}${match.teamB}.jpg`
 
   // Convert match start time and subtract 1 hour (60 * 60 * 1000 ms)
-  const matchStartTime = new Date(match.matchStartDateTime).getTime() - (60 * 60 * 1000);
+  const matchStartTime = new Date(match.matchStartDateTime).getTime() - (30 * 60 * 1000);
   const currentTime = new Date().getTime();
   const diffInMinutes = Math.floor((matchStartTime - currentTime) / (1000 * 60));
 
