@@ -46,7 +46,7 @@ export function MatchPrediction({ match, onSubmit }: MatchProps) {
 
   // Format the time left
   let timeLeftText = "";
-  if (diffInMinutes > 0 && diffInMinutes <= 180) {
+  if (diffInMinutes > 0 && diffInMinutes <= 600) {
     if (diffInMinutes > 60) {
       const hours = Math.floor(diffInMinutes / 60);
       const minutes = diffInMinutes % 60;
