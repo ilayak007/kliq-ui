@@ -293,7 +293,7 @@ function PredictPageContent() {
               </a> */}
             </div>          
         {todaysMatches && todaysMatches.length > 0 && (
-           <p className="text-gray-400 mt-0.6">Predictions will close 1 hour before the match begins.</p>          
+           <p className="text-gray-400 mt-0.6">Predictions will close 30 minutes before the match begins.</p>          
           //<p className="text-red-800 mt-5.9">TESTING GOING ON...</p>
           )}
           {loadingTodaysMatches ? (
