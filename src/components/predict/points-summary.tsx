@@ -148,7 +148,7 @@ export function PointsSummary({ data, tournamentId }: PointsSummaryProps) {
         {/* ✅ Keep card and earned text separate */}
         <div className="flex flex-col items-center">
           <Link
-            href={'/customer-ranking'}
+            href={tournamentId ? `/customer-ranking?tournamentId=${tournamentId}` : '/customer-ranking'}
             className="bg-blue-200 p-4 rounded-lg flex flex-col items-center justify-center hover:bg-blue-300 transition-colors relative w-full"
           >
             {data.position >= 1 && data.position <= 3 && (
