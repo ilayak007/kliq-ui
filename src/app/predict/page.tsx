@@ -399,7 +399,7 @@ function PredictPageContent() {
             </div>
           ) : (
             <div className="text-center py-4 text-red-600 font-large">
-              Tournament kicks off on 7th Feb (Sat). Don’t miss it!
+              Tomorrow's matches will be available soon. Please come back shorty. Thanks!
             </div>
           )}
         </div>
