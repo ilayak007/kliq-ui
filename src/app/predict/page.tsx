@@ -315,9 +315,11 @@ function PredictPageContent() {
           )}
         </div>
 
-        <div className="mt-8">
-          <ParticipationRules />
-        </div>
+        {pointsSummary && pointsSummary.totalPredicted === 0 && (
+          <div className="mt-8">
+            <ParticipationRules />
+          </div>
+        )}
 
         <div className="mt-8">
           <h2 className="text-lg font-semibold mb-4">Your Points Summary</h2>
