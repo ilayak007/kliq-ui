@@ -110,7 +110,7 @@ export function MatchPrediction({ match, onSubmit }: MatchProps) {
         </RadioGroup>
 
         <div className="absolute md:top-2 md:right-4 bottom-2 left-4 text-green-600 text-sm md:bottom-auto md:left-auto">
-        {match.totalVoteCount} {match.totalVoteCount === 1 ? "vote" : "votes"} till now
+        {match.totalVoteCount} {match.totalVoteCount === 1 ? "vote" : "votes"}
         {timeLeftText && <span className="ml-2 text-red-500"> | {timeLeftText}</span>}
       </div>
 
