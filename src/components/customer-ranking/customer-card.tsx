@@ -28,7 +28,7 @@ const getBackgroundColor = (rank: number): string => {
     case 8: return "from-orange-100 to-orange-100";
     case 9: return "from-lime-100 to-lime-100";
     case 10: return "from-cyan-100 to-cyan-100";
-    default: return "from-gray-500 to-gray-500";
+    default: return "from-gray-200 to-gray-500";
   }
 };
 
