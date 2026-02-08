@@ -399,7 +399,7 @@ function PredictPageContent() {
             </div>
           ) : (
             <div className="text-center py-4 text-red-600 font-large">
-              Tomorrow's matches will be available soon. Please come back shorty. Thanks!
+              Tomorrow&apos;s matches will be available soon. Please come back shorty. Thanks!
             </div>
           )}
         </div>
